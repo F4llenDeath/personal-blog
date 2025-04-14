@@ -46,5 +46,18 @@ import Favicons from './Favicons.astro'
   <Favicons />
   <ClientRouter />
 
+  <!-- Open Graph Metadata -->
+  <meta property="og:title" content={SITE.title} />
+  <meta property="og:description" content="Personal blog by F4llenDeath — Biomedical engineering, code, and creativity." />
+  <meta property="og:image" content="/static/social-preview.png" />
+  <meta property="og:url" content={Astro.site?.toString()} />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={SITE.title} />
+  <meta name="twitter:description" content="Personal blog by F4llenDeath — Biomedical engineering, code, and creativity." />
+  <meta name="twitter:image" content="/static/social-preview.png" />
+
   <slot />
 </head>

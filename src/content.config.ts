@@ -29,7 +29,7 @@ const authors = defineCollection({
     linkedin: z.string().url().optional(),
     discord: z.string().url().optional(),
   }),
-})
+}) 
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
@@ -45,4 +45,20 @@ const projects = defineCollection({
     }),
 })
 
-export const collections = { blog, authors, projects }
+const publications = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/publications' }),
+  schema: z.object({
+    title: z.string(),
+    href: z.string().url(),
+    icon: z.string().optional(),
+    published: z.coerce.date(),
+    journal: z.string().optional(),
+  }),
+});
+
+export const collections = {
+  blog,
+  authors,
+  projects,
+  publications, 
+}

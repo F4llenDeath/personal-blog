@@ -1,0 +1,52 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Link from '@/components/Link.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { Icon } from 'astro-icon/components'
+import { getCollection } from "astro:content"
+
+const raw = await getCollection<'publications'>('publications')
+const sorted = raw.sort((a, b) => b.data.published.getTime() - a.data.published.getTime())
+const publicationsByYear = sorted.reduce((acc, pub) => {
+  const year = pub.data.published.getFullYear()
+  acc[year] = acc[year] || []
+  acc[year].push(pub)
+  return acc
+}, {} as Record<number, typeof raw>)
+---
+
+<Layout>
+  <PageHead slot="head" title="Publications" />
+  <Breadcrumbs items={[{ label: 'Publications', icon: 'lucide:book-open' }]} />
+
+  <section>
+    <div class="min-w-full">
+      <h2 class="mb-4 text-2xl font-medium">My Publications</h2>
+        <div class="flex flex-col gap-4">
+          {Object.entries(publicationsByYear)
+            .sort(([a], [b]) => parseInt(b) - parseInt(a)) // descending year
+            .map(([year, pubs]) => (
+              <section class="flex flex-col gap-y-4">
+                <div class="font-medium text-lg">{year}</div>
+                <ul class="flex flex-col gap-4">
+                  {pubs.map(({ data }) => (
+                    <li>
+                      <a href={data.href} class="flex gap-4 rounded-md p-4 hover:bg-muted" target="_blank">
+                        <Icon name={data.icon} class="size-4 shrink-0" />
+                        <div class="space-y-1">
+                          <h3 class="text-sm font-medium leading-none">{data.title}</h3>
+                          <p class="text-xs text-muted-foreground">
+                            {data.journal ? `${data.journal} • ` : ''}{data.published.toLocaleDateString()}
+                          </p>
+                        </div>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+          ))}
+        </div>
+    </div>
+  </section>
+</Layout>
