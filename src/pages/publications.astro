@@ -1,0 +1,46 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Link from '@/components/Link.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { Icon } from 'astro-icon/components'
+
+const publications = [
+  {
+    title: "Splittable systems in biomedical applications, 2024.",
+    href: "https://pubs.rsc.org/en/content/articlelanding/2024/bm/d4bm00709c/unauth",
+    icon: "lucide:book-open",
+  },
+  /*{
+    title: "Conference Talk: Static Blogs",
+    description: "Presented at WebConf 2024 about modern static blog setups.",
+    href: "/slides/blogtalk.pdf",
+    icon: "lucide:mic",
+  },*/
+]
+---
+
+<Layout>
+  <PageHead slot="head" title="Publications" />
+  <Breadcrumbs items={[{ label: 'Publications', icon: 'lucide:book-open' }]} />
+
+  <section>
+    <div class="min-w-full">
+      <div class="prose mb-8">
+        <p>Here are selected papers, talks, and research outputs I've published.</p>
+      </div>
+
+      <h2 class="mb-4 text-2xl font-medium">My Publications</h2>
+        <div class="flex flex-col gap-4">
+          {publications.map((item) => (
+            <a href={item.href} class="flex gap-4 rounded-md p-4 hover:bg-muted" target="_blank">
+              <Icon name={item.icon} class="size-6 shrink-0" />
+              <div class="space-y-1">
+                <h3 class="text-sm font-medium leading-none">{item.title}</h3>
+              </div>
+            </a>
+          ))}
+        </div>
+    </div>
+  </section>
+</Layout>
