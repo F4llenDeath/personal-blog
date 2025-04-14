@@ -1,2 +1,2 @@
-My personal website
+My personal website.  
 This site is based off the free [astro-erudite](https://github.com/jktrn/astro-erudite) template from [enscribe](https://enscribe.dev/). It's built with [Astro](https://astro.build/).
