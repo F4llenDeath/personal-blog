@@ -8,10 +8,12 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations } from 'src/i18n/util.ts'
+import { ui, defaultLang } from 'src/i18n/ui'
 
 export interface BreadcrumbItem {
   href?: string
-  label: string
+  label: keyof typeof ui[typeof defaultLang] | string
   icon?: string
 }
 
@@ -20,6 +22,8 @@ interface Props {
 }
 
 const { items } = Astro.props
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 ---
 
 <Breadcrumb>
@@ -38,14 +42,18 @@ const { items } = Astro.props
               <BreadcrumbPage>
                 <span class="flex items-center gap-x-2">
                   {item.icon && <Icon name={item.icon} class="size-4" />}
-                  {item.label}
+                  {typeof item.label === 'string' && item.label in ui[lang]
+                    ? t(item.label as keyof typeof ui[typeof defaultLang])
+                    : item.label}
                 </span>
               </BreadcrumbPage>
             ) : (
               <BreadcrumbLink href={item.href}>
                 <span class="flex items-center gap-x-2">
                   {item.icon && <Icon name={item.icon} class="size-4" />}
-                  {item.label}
+                  {typeof item.label === 'string' && item.label in ui[lang]
+                    ? t(item.label as keyof typeof ui[typeof defaultLang])
+                    : item.label}
                 </span>
               </BreadcrumbLink>
             )}

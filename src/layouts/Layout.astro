@@ -5,14 +5,17 @@ import '@/styles/typography.css'
 import Footer from '@/components/Footer.astro'
 import Head from '@/components/Head.astro'
 import Header from '@/components/Header.astro'
-import { SITE } from '@/consts'
 import { cn } from '@/lib/utils'
 
+import LanguagePicker from '@/components/LanguagePicker.astro'
+import { getLangFromUrl } from 'src/i18n/util.ts'
+
 const { isWide = false } = Astro.props
+const lang = getLangFromUrl(Astro.url)
 ---
 
 <!doctype html>
-<html lang={SITE.locale}>
+<html lang={lang}>
   <Head>
     <slot name="head" />
   </Head>
@@ -29,6 +32,13 @@ const { isWide = false } = Astro.props
           <slot />
         </div>
       </main>
+
+      <!-- Language Switcher -->
+      <div
+        class="text-muted-foreground mx-auto mt-8 max-w-3xl px-4 text-center text-sm"
+      >
+        <LanguagePicker />
+      </div>
       <Footer />
     </div>
   </body>
