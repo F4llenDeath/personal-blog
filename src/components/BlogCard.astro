@@ -9,6 +9,8 @@ import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import Link from './Link.astro'
 
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
+
 interface Props {
   entry: CollectionEntry<'blog'>
 }
@@ -17,13 +19,16 @@ const { entry } = Astro.props
 const formattedDate = formatDate(entry.data.date)
 const readTime = readingTime(entry.body!)
 const authors = await parseAuthors(entry.data.authors ?? [])
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
 ---
 
 <div
   class="hover:bg-secondary/50 rounded-xl border p-4 transition-colors duration-300 ease-in-out"
 >
   <Link
-    href={`/${entry.collection}/${entry.id}`}
+    href={translatePath(`/${entry.collection}/${entry.id}`)}
     class="flex flex-col gap-4 sm:flex-row"
   >
     {
@@ -49,7 +54,7 @@ const authors = await parseAuthors(entry.data.authors ?? [])
       >
         <span>{formattedDate}</span>
         <Separator orientation="vertical" className="h-4!" />
-        <span>{readTime}</span>
+        <span>{t('blog.readTime', { time: readTime.replace(/\s*read$/, '') })}</span>
       </div>
 
       {

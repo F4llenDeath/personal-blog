@@ -22,7 +22,7 @@ const publicationsByYear = sorted.reduce((acc, pub) => {
 
   <section>
     <div class="min-w-full">
-      <h2 class="mb-4 text-2xl font-medium">My Publications</h2>
+      <h2 class="mb-4 text-2xl font-medium">我的学术成果</h2>
         <div class="flex flex-col gap-4">
           {Object.entries(publicationsByYear)
             .sort(([a], [b]) => parseInt(b) - parseInt(a)) // descending year

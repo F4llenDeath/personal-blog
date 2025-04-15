@@ -22,19 +22,17 @@ const blog = await getRecentPosts(SITE.featuredPostCount)
       </div>
       <div class="p-6 pt-0">
         <p class="text-muted-foreground mb-2 text-sm">
-          Welcome! I’m a biomedical engineering student who loves working with both cells and code. This blog is where I share writeups, technical notes, and personal insights across science, tech and daily life.  
+          你好👋！我是一名生物医学工程专业学生，
+          这个博客是我的个人空间，会分享一些技术笔记、学习心得和日常生活。  
         </p>
         <p class="italic text-muted-foreground text-sm">
-          A student of human systems and digital ones alike.  
-        </p>
-        <p class="italic text-muted-foreground text-sm">
-          Specializes in building with both molecules and modules.
+          摔死(bushi 
         </p>
       </div>
     </div>
   </section>
   <section class="flex flex-col gap-y-4">
-    <h2 class="text-2xl font-medium">Latest posts</h2>
+    <h2 class="text-2xl font-medium">最新文章</h2>
     <ul class="flex flex-col gap-y-4">
       {
         blog.map((post) => (

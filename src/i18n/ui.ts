@@ -11,12 +11,14 @@ export const ui = {
         'nav.publications': 'Publications',
         'nav.tags': 'Tags',
         'breadcrumb.allPosts': 'All Posts',
+        'blog.readTime': '{time} read',
     },
     zh: {
         'nav.blog': '博客',
-        'nav.publications': '论文发表',
+        'nav.publications': '学术成果',
         'nav.tags': '标签',
         'breadcrumb.allPosts': '所有文章',
+        'blog.readTime': '阅读时间：{time}',
     },
 } as const;
 

@@ -7,8 +7,16 @@ export function getLangFromUrl(url: URL) {
 }
 
 export function useTranslations(lang: keyof typeof ui) {
-  return function t(key: keyof typeof ui[typeof defaultLang]) {
-    return ui[lang][key] || ui[defaultLang][key]
+  return function t(
+    key: keyof typeof ui[typeof defaultLang],
+    vars?: Record<string, string>
+  ) {
+    const template = ui[lang][key] || ui[defaultLang][key]
+    if (!vars) return template
+    return Object.entries(vars).reduce(
+      (str, [k, v]) => str.replaceAll(`{${k}}`, v),
+      template as string
+    )
   }
 }
 
