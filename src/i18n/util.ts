@@ -21,7 +21,15 @@ export function useTranslations(lang: keyof typeof ui) {
 }
 
 export function useTranslatedPath(lang: keyof typeof ui) {
-    return function translatePath(path: string, l: string = lang) {
-      return !showDefaultLang && l === defaultLang ? path : `/${l}${path}`
-    }
+  return function translatePath(path: string, l: string = lang) {
+    return !showDefaultLang && l === defaultLang ? path : `/${l}${path}`
   }
+}
+
+export function formatLocalizedDate(date: string | Date, lang: string) {
+  return new Intl.DateTimeFormat(lang, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(date))
+}

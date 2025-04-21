@@ -13,6 +13,7 @@ import { formatDate, readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { render } from 'astro:content'
+import { getLangFromUrl, formatLocalizedDate } from '@/i18n/util'
 
 export async function getStaticPaths() {
   const posts = await getAllPosts()
@@ -27,6 +28,7 @@ const currentPostId = Astro.params.id
 const { Content, headings } = await render(post)
 const { next, prev } = await getAdjacentPosts(currentPostId)
 const authors = await parseAuthors(post.data.authors ?? [])
+const lang = getLangFromUrl(Astro.url)
 ---
 
 <Layout isWide>
@@ -65,7 +67,7 @@ const authors = await parseAuthors(post.data.authors ?? [])
           class="text-muted-foreground mb-4 flex flex-wrap items-center justify-center gap-2 text-sm"
         >
           <div class="flex items-center gap-2">
-            <span>{formatDate(post.data.date)}</span>
+            <span>{formatLocalizedDate(post.data.date, lang)}</span>
             <Separator orientation="vertical" className="h-4!" />
             <span>{readingTime(post.body!)}</span>
           </div>

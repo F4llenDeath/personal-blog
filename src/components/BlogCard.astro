@@ -9,19 +9,19 @@ import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import Link from './Link.astro'
 
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
+import { getLangFromUrl, useTranslations, useTranslatedPath, formatLocalizedDate } from '@/i18n/util'
 
 interface Props {
   entry: CollectionEntry<'blog'>
 }
 
 const { entry } = Astro.props
-const formattedDate = formatDate(entry.data.date)
 const readTime = readingTime(entry.body!)
 const authors = await parseAuthors(entry.data.authors ?? [])
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
+const formattedDate = formatLocalizedDate(entry.data.date, lang)
 ---
 
 <div
