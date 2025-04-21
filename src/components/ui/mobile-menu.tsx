@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -6,10 +5,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { NAV_LINKS } from '@/consts'
+import type { ui } from '@/i18n/ui'
+import { useTranslations } from '@/i18n/util'
 import { Menu } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
-const MobileMenu = () => {
+interface Props {
+  lang: string
+}
+
+const MobileMenu = ({ lang }: Props) => {
+  const typedLang = lang as keyof typeof ui
+  const t = useTranslations(typedLang)
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -45,17 +52,21 @@ const MobileMenu = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-background">
-        {NAV_LINKS.map((item) => (
-          <DropdownMenuItem key={item.href} asChild>
-            <a
-              href={item.href}
-              className="w-full text-lg font-medium capitalize"
-              onClick={() => setIsOpen(false)}
-            >
-              {item.label}
-            </a>
-          </DropdownMenuItem>
-        ))}
+        <DropdownMenuItem asChild>
+          <a href={`${lang === 'en' ? '' : '/' + lang}/blog`} className="w-full text-lg font-medium capitalize">
+            {t('nav.blog')}
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <a href={`${lang === 'en' ? '' : '/' + lang}/publications`} className="w-full text-lg font-medium capitalize">
+            {t('nav.publications')}
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <a href={`${lang === 'en' ? '' : '/' + lang}/tags`} className="w-full text-lg font-medium capitalize">
+            {t('nav.tags')}
+          </a>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

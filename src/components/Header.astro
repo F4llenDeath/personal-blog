@@ -35,7 +35,7 @@ const translatePath = useTranslatedPath(lang)
           {t('nav.tags')}
         </Link>
       </nav>
-      <MobileMenu client:load transition:persist />
+      <MobileMenu lang={lang} client:load transition:persist />
       <ThemeToggle transition:persist />
     </div>
   </div>
