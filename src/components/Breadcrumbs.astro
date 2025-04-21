@@ -29,7 +29,7 @@ const t = useTranslations(lang)
 <Breadcrumb>
   <BreadcrumbList>
     <BreadcrumbItem>
-      <BreadcrumbLink href="/">
+      <BreadcrumbLink href={lang === 'en' ? '/' : `/${lang}/`}>
         <Icon name="lucide:home" class="size-4" />
       </BreadcrumbLink>
     </BreadcrumbItem>

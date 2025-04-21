@@ -1,6 +1,7 @@
 ---
 import { languages, defaultLang } from '@/i18n/ui'
 import { getLangFromUrl, useTranslatedPath } from 'src/i18n/util.ts'
+import Link from '@/components/Link.astro'
 
 const currentUrl = Astro.url
 const lang = getLangFromUrl(Astro.url)
@@ -25,9 +26,9 @@ const pathname = currentUrl.pathname
   
         return (
           <li>
-            <a href={translatedPath} data-astro-reload class="hover:underline">
+            <Link href={translatedPath} class="hover:text-foreground/80" data-astro-reload>
               {label}
-            </a>
+            </Link>
           </li>
         )
       })
