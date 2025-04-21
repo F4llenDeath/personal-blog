@@ -10,8 +10,6 @@ export async function getStaticPaths() {
   const tagMap = await getAllTags()
   const uniqueTags = Array.from(tagMap.keys())
 
-  console.log('All tags:', uniqueTags)
-
   return Promise.all(
     uniqueTags.map(async (tag) => {
       const posts = await getPostsByTag(tag)

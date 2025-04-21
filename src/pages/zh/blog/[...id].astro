@@ -78,7 +78,7 @@ const t = useTranslations(lang)
             post.data.tags && post.data.tags.length > 0 ? (
               post.data.tags.map((tag) => (
                 <a
-                  href={`/tags/${tag}`}
+                  href={`/${lang}/tags/${tag}`}
                   class={badgeVariants({ variant: 'secondary' })}
                 >
                   <Icon name="lucide:hash" class="size-3" />

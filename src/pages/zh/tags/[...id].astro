@@ -5,6 +5,7 @@ import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/lib/data-utils'
 import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations } from '@/i18n/util'
 
 export async function getStaticPaths() {
   const tagMap = await getAllTags()
@@ -25,23 +26,25 @@ export async function getStaticPaths() {
 }
 
 const { tag, posts } = Astro.props
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 ---
 
 <Layout>
   <PageHead
     slot="head"
-    title={`Posts tagged with "${tag}"`}
-    description={`A collection of posts tagged with ${tag}.`}
+    title={`${t('tags.postsTaggedWith')} "${tag}"`}
+    description={`${t('tags.collectionWith')} ${tag}`}
   />
   <Breadcrumbs
     items={[
-      { href: '/tags', label: 'nav.tags', icon: 'lucide:tags' },
+      { href: lang === 'en' ? '/tags' : `/${lang}/tags`, label: 'nav.tags', icon: 'lucide:tags' },
       { label: tag, icon: 'lucide:tag' },
     ]}
   />
 
   <div class="flex flex-wrap items-center gap-2">
-    <h1 class="text-3xl font-medium">Posts tagged with</h1>
+    <h1 class="text-3xl font-medium">{t('tags.postsTaggedWith')}</h1>
     <span
       class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"
     >
