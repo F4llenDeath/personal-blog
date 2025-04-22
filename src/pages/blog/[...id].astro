@@ -1,6 +1,5 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
-import Link from '@/components/Link.astro'
 import PostHead from '@/components/PostHead.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
@@ -8,8 +7,8 @@ import { badgeVariants } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import Layout from '@/layouts/Layout.astro'
-import { getAdjacentPosts, getAllPosts, parseAuthors } from '@/lib/data-utils'
-import { formatDate, readingTime } from '@/lib/utils'
+import { getAdjacentPosts, getAllPosts, } from '@/lib/data-utils'
+import { readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { render } from 'astro:content'
@@ -27,7 +26,6 @@ const post = Astro.props
 const currentPostId = Astro.params.id
 const { Content, headings } = await render(post)
 const { next, prev } = await getAdjacentPosts(currentPostId)
-const authors = await parseAuthors(post.data.authors ?? [])
 const lang = getLangFromUrl(Astro.url)
 ---
 

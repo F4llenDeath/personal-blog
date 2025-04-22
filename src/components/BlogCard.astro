@@ -1,9 +1,7 @@
 ---
-import AvatarComponent from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { parseAuthors } from '@/lib/data-utils'
-import { formatDate, readingTime } from '@/lib/utils'
+import { readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
@@ -17,7 +15,6 @@ interface Props {
 
 const { entry } = Astro.props
 const readTime = readingTime(entry.body!)
-const authors = await parseAuthors(entry.data.authors ?? [])
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)

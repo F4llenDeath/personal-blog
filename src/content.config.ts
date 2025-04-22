@@ -15,36 +15,6 @@ const blog = defineCollection({
     }),
 })
 
-const authors = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/authors' }),
-  schema: z.object({
-    name: z.string(),
-    pronouns: z.string().optional(),
-    avatar: z.string().url().or(z.string().startsWith('/')),
-    bio: z.string().optional(),
-    mail: z.string().email().optional(),
-    website: z.string().url().optional(),
-    twitter: z.string().url().optional(),
-    github: z.string().url().optional(),
-    linkedin: z.string().url().optional(),
-    discord: z.string().url().optional(),
-  }),
-}) 
-
-const projects = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
-  schema: ({ image }) =>
-    z.object({
-      name: z.string(),
-      description: z.string(),
-      tags: z.array(z.string()),
-      image: image(),
-      link: z.string().url(),
-      startDate: z.coerce.date().optional(),
-      endDate: z.coerce.date().optional(),
-    }),
-})
-
 const publications = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/publications' }),
   schema: z.object({
@@ -56,9 +26,18 @@ const publications = defineCollection({
   }),
 });
 
+const gallery = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/gallery' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    cover: z.string().startsWith('/'),
+    photos: z.array(z.string()),
+  }),
+});
+
 export const collections = {
   blog,
-  authors,
-  projects,
   publications, 
+  gallery,
 }

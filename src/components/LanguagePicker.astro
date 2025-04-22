@@ -1,11 +1,10 @@
 ---
 import { languages, defaultLang } from '@/i18n/ui'
-import { getLangFromUrl, useTranslatedPath } from 'src/i18n/util.ts'
+import { getLangFromUrl } from 'src/i18n/util.ts'
 import Link from '@/components/Link.astro'
 
 const currentUrl = Astro.url
 const lang = getLangFromUrl(Astro.url)
-const translatePath = useTranslatedPath(lang)
 const pathname = currentUrl.pathname
 ---
 
