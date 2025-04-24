@@ -1,0 +1,22 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { getCollection } from 'astro:content';
+import AlbumCard from '@/components/AlbumCard.astro';
+
+const albums = await getCollection('albums');
+---
+
+<Layout>
+  <h1 class="mb-4 text-2xl font-medium">Gallery</h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    {albums.map(({ id, data }) => (
+      <AlbumCard
+        id={id}
+        title={data.title}
+        description={data.description}
+        cover={data.cover}
+      />
+    ))}
+  </div>
+</Layout>

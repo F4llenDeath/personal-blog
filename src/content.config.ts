@@ -26,18 +26,18 @@ const publications = defineCollection({
   }),
 });
 
-const gallery = defineCollection({
-  loader: glob({ pattern: '**/*.json', base: './src/content/gallery' }),
-  schema: z.object({
-    title: z.string(),
-    date: z.coerce.date(),
-    cover: z.string().startsWith('/'),
-    photos: z.array(z.string()),
-  }),
+const albums = defineCollection({
+  type: "data",
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string().optional(),
+      cover: image(),
+    }),
 });
 
 export const collections = {
   blog,
   publications, 
-  gallery,
+  albums,
 }

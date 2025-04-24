@@ -1,0 +1,73 @@
+---
+import { getCollection } from "astro:content";
+import { getAlbumImages } from "@/utils/albums";
+import { Image } from "astro:assets";
+import Layout from '@/layouts/Layout.astro'
+
+export async function getStaticPaths() {
+  const albums = await getCollection('albums');
+
+  const paths = Object.values(albums).map((album) => {
+    return {
+      params: {
+        id: album.id,
+      },
+      props: {
+        album,
+      },
+    };
+  });
+
+  console.log("📦 ALBUM IDS:", albums.map(a => a.id));
+
+  return paths;
+}
+
+const { album } = Astro.props;
+const images: ImageMetadata[] = await getAlbumImages(album.id);
+---
+<Layout>
+  <main class="text-center my-16 mb-32">
+    <h1 class="mb-4 text-5xl font-bold">{album.data.title}</h1>
+
+    {album.data.description && (
+      <p class="mb-4 text-lg font-medium">{album.data.description}</p>
+    )}
+
+    <div class="mx-auto container my-8 sm:columns-1 md:columns-2 lg:columns-3 px-4">
+      {
+        images.map((image) => (
+          <Image
+            src={image}
+            alt={`Image from ${album.data.title} album`}
+            format="avif"
+            quality={50}
+            class="rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg"
+            loading="lazy"
+          />
+        ))
+      }
+    </div>
+
+    <div class="mt-12 flex justify-center">
+      <a
+        href="/gallery"
+        class="group flex w-fit items-center gap-3 rounded-xl border border-border px-6 py-4 transition hover:bg-secondary/50"
+      >
+        <div class="text-left leading-none">
+          <div class="text-sm text-muted-foreground">Back</div>
+          <div class="font-semibold text-foreground group-hover:underline">Gallery</div>
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="size-5 rotate-180 text-muted-foreground transition group-hover:text-foreground"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </main>
+</Layout>
