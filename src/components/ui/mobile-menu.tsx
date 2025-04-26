@@ -63,6 +63,11 @@ const MobileMenu = ({ lang }: Props) => {
           </a>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
+          <a href={`${lang === 'en' ? '' : '/' + lang}/gallery`} className="w-full text-lg font-medium capitalize">
+            {t('nav.gallery')}
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <a href={`${lang === 'en' ? '' : '/' + lang}/tags`} className="w-full text-lg font-medium capitalize">
             {t('nav.tags')}
           </a>

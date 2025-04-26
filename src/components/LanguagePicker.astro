@@ -11,17 +11,16 @@ const pathname = currentUrl.pathname
 <ul class="flex gap-4 justify-center">
     {
       Object.entries(languages).map(([code, label]) => {
-        // Remove current language prefix (if any)
         let pathParts = pathname.split('/').filter(Boolean)
         const isDefault = code === defaultLang
   
         if (lang !== defaultLang) {
-          pathParts = pathParts.slice(1) // remove current lang prefix
+          pathParts = pathParts.slice(1) 
         }
   
         const translatedPath = isDefault
-          ? `/${pathParts.join('/')}` // e.g., /blog/2023-post
-          : `/${code}/${pathParts.join('/')}` // e.g., /zh/blog/2023-post
+          ? `/${pathParts.join('/')}` 
+          : `/${code}/${pathParts.join('/')}` 
   
         return (
           <li>
