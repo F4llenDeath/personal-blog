@@ -3,16 +3,17 @@ import Link from '@/components/Link.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
-import { getLangFromUrl, useTranslations } from '@/i18n/util'
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
 const { prevPost, nextPost } = Astro.props
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
 ---
 
 <nav class="col-start-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
   <Link
-    href={nextPost ? `/blog/${nextPost.id}` : '#'}
+    href={nextPost ? translatePath(`/blog/${nextPost.id}`) : '#'}
     class={cn(
       buttonVariants({ variant: 'outline' }),
       'rounded-xl group flex items-center justify-start size-full',
@@ -32,7 +33,7 @@ const t = useTranslations(lang)
     </div>
   </Link>
   <Link
-    href={prevPost ? `/blog/${prevPost.id}` : '#'}
+    href={prevPost ? translatePath(`/blog/${prevPost.id}`) : '#'}
     class={cn(
       buttonVariants({ variant: 'outline' }),
       'rounded-xl group flex items-center justify-end size-full',

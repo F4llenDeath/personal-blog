@@ -5,15 +5,15 @@ import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/lib/data-utils'
 import { Icon } from 'astro-icon/components'
-import { getLangFromUrl, useTranslations } from '@/i18n/util'
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
 export async function getStaticPaths() {
-  const tagMap = await getAllTags()
+  const tagMap = await getAllTags('zh')
   const uniqueTags = Array.from(tagMap.keys())
 
   return Promise.all(
     uniqueTags.map(async (tag) => {
-      const posts = await getPostsByTag(tag)
+      const posts = await getPostsByTag(tag, 'zh')
       return {
         params: { id: tag },
         props: {
@@ -28,6 +28,7 @@ export async function getStaticPaths() {
 const { tag, posts } = Astro.props
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
 ---
 
 <Layout>
@@ -38,7 +39,7 @@ const t = useTranslations(lang)
   />
   <Breadcrumbs
     items={[
-      { href: lang === 'en' ? '/tags' : `/${lang}/tags`, label: 'nav.tags', icon: 'lucide:tags' },
+      { href: translatePath('/tags'), label: 'nav.tags', icon: 'lucide:tags' },
       { label: tag, icon: 'lucide:tag' },
     ]}
   />

@@ -7,9 +7,9 @@ import { defaultLang } from '@/i18n/ui';
 import { getCollection } from 'astro:content';
 import AlbumCard from '@/components/AlbumCard.astro';
 
-// Determine locale, then load content for that locale
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+// Load all albums then filter by locale
 const allAlbums = await getCollection('albums');
 const albums = allAlbums.filter(
   (album) => (album.data.lang ?? defaultLang) === lang
@@ -23,13 +23,16 @@ const albums = allAlbums.filter(
   <h1 class="mb-4 text-2xl font-medium">{t('nav.gallery')}</h1>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    {albums.map(({ id, data }) => (
-      <AlbumCard
-        id={id}
-        title={data.title}
-        description={data.description}
-        cover={data.cover}
-      />
-    ))}
+    {albums.map(({ id, data }) => {
+      const baseId = id.replace(/\.zh$/, '');
+      return (
+        <AlbumCard
+          id={baseId}
+          title={data.title}
+          description={data.description}
+          cover={data.cover}
+        />
+      );
+    })}
   </div>
 </Layout>

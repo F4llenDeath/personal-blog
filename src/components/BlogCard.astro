@@ -14,7 +14,8 @@ interface Props {
 }
 
 const { entry } = Astro.props
-const readTime = readingTime(entry.body!)
+// entry.body may be undefined; default to empty string to avoid errors
+const readTime = readingTime(entry.body ?? '')
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)

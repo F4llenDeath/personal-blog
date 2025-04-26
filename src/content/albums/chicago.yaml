@@ -1,3 +1,8 @@
+lang: 'en'
 title: Chicago
-description: Photos from my visits to Chicago
+description: |
+  Photos from Chicago, Illinois—a city where lakefront panoramas meet soaring skyscrapers and a storied cultural heritage.
+
+  This collection captures the Windy City’s iconic skyline on the shores of Lake Michigan, the mirrored surface of “The Bean” in Millennium Park, and the historic charm of neighborhoods like Wicker Park and Hyde Park. You’ll see architectural marvels from the neo-Gothic Tribune Tower to the modern glass façade of the John Hancock Center, street-corner jazz spilling out of blues clubs, and warm, deep-dish pizza sharing center stage with stunning sunsets over the lake.
+
 cover: ./chicago/cover.jpeg

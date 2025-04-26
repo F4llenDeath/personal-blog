@@ -12,6 +12,7 @@ const blog = defineCollection({
       tags: z.array(z.string()).optional(),
       authors: z.array(z.string()).optional(),
       draft: z.boolean().optional(),
+      lang: z.union([z.literal('en'), z.literal('zh')]).optional(),
     }),
 })
 
@@ -30,6 +31,7 @@ const albums = defineCollection({
   type: "data",
   schema: ({ image }) =>
     z.object({
+      lang: z.union([z.literal('en'), z.literal('zh')]).optional(),
       title: z.string(),
       description: z.string().optional(),
       cover: image(),

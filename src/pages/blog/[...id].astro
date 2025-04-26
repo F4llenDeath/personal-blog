@@ -12,7 +12,7 @@ import { readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { render } from 'astro:content'
-import { getLangFromUrl, formatLocalizedDate } from '@/i18n/util'
+import { getLangFromUrl, formatLocalizedDate, useTranslations, useTranslatedPath } from '@/i18n/util'
 
 export async function getStaticPaths() {
   const posts = await getAllPosts()
@@ -25,8 +25,10 @@ export async function getStaticPaths() {
 const post = Astro.props
 const currentPostId = Astro.params.id
 const { Content, headings } = await render(post)
-const { next, prev } = await getAdjacentPosts(currentPostId)
 const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
+const { next, prev } = await getAdjacentPosts(currentPostId, lang)
 ---
 
 <Layout isWide>
@@ -37,7 +39,7 @@ const lang = getLangFromUrl(Astro.url)
     <div class="col-start-2">
       <Breadcrumbs
         items={[
-          { href: '/blog', label: 'nav.blog', icon: 'lucide:archive' },
+          { href: translatePath('/blog'), label: 'nav.blog', icon: 'lucide:archive' },
           { label: post.data.title, icon: 'lucide:file-text' },
         ]}
       />
@@ -67,15 +69,15 @@ const lang = getLangFromUrl(Astro.url)
           <div class="flex items-center gap-2">
             <span>{formatLocalizedDate(post.data.date, lang)}</span>
             <Separator orientation="vertical" className="h-4!" />
-            <span>{readingTime(post.body!)}</span>
+            <span>{readingTime(post.body ?? '')}</span>
           </div>
         </div>
         <div class="flex flex-wrap justify-center gap-2">
           {
             post.data.tags && post.data.tags.length > 0 ? (
-              post.data.tags.map((tag) => (
+            post.data.tags.map((tag) => (
                 <a
-                  href={`/tags/${tag}`}
+                  href={translatePath(`/tags/${tag}`)}
                   class={badgeVariants({ variant: 'secondary' })}
                 >
                   <Icon name="lucide:hash" class="size-3" />

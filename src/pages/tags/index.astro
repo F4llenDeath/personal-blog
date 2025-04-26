@@ -5,13 +5,17 @@ import PageHead from '@/components/PageHead.astro'
 import { badgeVariants } from '@/components/ui/badge'
 import Layout from '@/layouts/Layout.astro'
 import { getSortedTags } from '@/lib/data-utils'
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 import { Icon } from 'astro-icon/components'
 
-const sortedTags = await getSortedTags()
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
+const sortedTags = await getSortedTags(lang)
 ---
 
 <Layout>
-  <PageHead slot="head" title="Tags" />
+  <PageHead slot="head" title={t('nav.tags')} />
   <Breadcrumbs items={[{ label: 'nav.tags', icon: 'lucide:tags' }]} />
 
   <div class="flex flex-col gap-4">
@@ -19,7 +23,7 @@ const sortedTags = await getSortedTags()
       {
         sortedTags.map(({ tag, count }) => (
           <Link
-            href={`/tags/${tag}`}
+            href={translatePath(`/tags/${tag}`)}
             class={badgeVariants({ variant: 'secondary' })}
           >
             <Icon name="lucide:hash" class="size-3" />

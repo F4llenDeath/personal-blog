@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import { defaultLang } from '@/i18n/ui';
 import { getAlbumImages } from "@/utils/albums";
 import { Image } from "astro:assets";
 import Layout from '@/layouts/Layout.astro'
@@ -10,29 +9,21 @@ import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
 export async function getStaticPaths() {
   const allAlbums = await getCollection('albums');
-  const albums = allAlbums.filter(
-    (album) => (album.data.lang ?? defaultLang) === defaultLang
-  );
-
-  const paths = albums.map((album) => {
-    return {
-      params: {
-        id: album.id,
-      },
-      props: {
-        album,
-      },
-    };
-  });
-
-  return paths;
+  // Only generate paths for Chinese entries, strip .zh suffix for user-friendly URLs
+  const albums = allAlbums.filter((album) => album.data.lang === 'zh');
+  return albums.map((album) => ({
+    params: { id: album.id.replace(/\.zh$/, '') },
+    props: { album },
+  }));
 }
 
 const { album } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
-const images: ImageMetadata[] = await getAlbumImages(album.id);
+// Use the URL param (base id without .zh) to load images
+const baseId = Astro.params.id;
+const images: ImageMetadata[] = await getAlbumImages(baseId);
 ---
 <Layout>
   <PageHead slot="head" title={album.data.title} description={album.data.description} />

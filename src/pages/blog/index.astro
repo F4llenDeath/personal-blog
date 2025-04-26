@@ -4,8 +4,11 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllPosts, groupPostsByYear } from '@/lib/data-utils'
+import { getLangFromUrl, useTranslations } from '@/i18n/util'
 
-const allPosts = await getAllPosts();
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const allPosts = await getAllPosts(lang)
 
 const postsByYear = groupPostsByYear(allPosts)
 const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
@@ -13,7 +16,7 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
 ---
 
 <Layout>
-  <PageHead slot="head" title="Blog" />
+  <PageHead slot="head" title={t('nav.blog')} />
   <Breadcrumbs
     items={[
       { label: 'nav.blog', href: '/blog', icon: 'lucide:archive' },
