@@ -6,8 +6,14 @@ import { buttonVariants } from '@/components/ui/button'
 import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { getRecentPosts } from '@/lib/data-utils'
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
-const blog = await getRecentPosts(SITE.featuredPostCount)
+// Determine current language (should be 'zh' on /zh)
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
+// Load latest posts for current locale
+const blog = await getRecentPosts(SITE.featuredPostCount, lang)
 ---
 
 <Layout>
@@ -34,23 +40,20 @@ const blog = await getRecentPosts(SITE.featuredPostCount)
   <section class="flex flex-col gap-y-4">
     <h2 class="text-2xl font-medium">最新文章</h2>
     <ul class="flex flex-col gap-y-4">
-      {
-        blog.map((post) => (
-          <li>
-            <BlogCard entry={post} />
-          </li>
-        ))
-      }
+      {blog.map((post) => (
+        <li>
+          <BlogCard entry={post} />
+        </li>
+      ))}
     </ul>
     <div class="flex justify-center">
       <Link
-        href="/zh/blog"
+        href={translatePath('/blog')}
         class={buttonVariants({ variant: 'ghost' }) + ' group'}
       >
         See all posts <span
           class="ml-1.5 transition-transform group-hover:translate-x-1"
-          >&rarr;</span
-        >
+          >&rarr;</span>
       </Link>
     </div>
   </section>
