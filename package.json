@@ -37,6 +37,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",
     "patch-package": "^8.0.0",
+    "photoswipe": "^5.4.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "rehype-document": "^7.0.3",
@@ -51,6 +52,7 @@
     "typescript": "^5.7.3"
   },
   "devDependencies": {
+    "@types/photoswipe": "^4.1.6",
     "prettier": "^3.5.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-astro-organize-imports": "^0.4.11",

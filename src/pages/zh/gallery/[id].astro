@@ -9,7 +9,6 @@ import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
 export async function getStaticPaths() {
   const allAlbums = await getCollection('albums');
-  // Only generate paths for Chinese entries, strip .zh suffix for user-friendly URLs
   const albums = allAlbums.filter((album) => album.data.lang === 'zh');
   return albums.map((album) => ({
     params: { id: album.id.replace(/\.zh$/, '') },
@@ -21,7 +20,6 @@ const { album } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
-// Use the URL param (base id without .zh) to load images
 const baseId = Astro.params.id;
 const images: ImageMetadata[] = await getAlbumImages(baseId);
 ---
@@ -42,20 +40,41 @@ const images: ImageMetadata[] = await getAlbumImages(baseId);
       </div>
     )}
 
-    <div class="mx-auto container my-8 sm:columns-1 md:columns-2 lg:columns-3 px-4">
-      {
-        images.map((image) => (
+    <div id="pswp-gallery" class="mx-auto container my-8 sm:columns-1 md:columns-2 lg:columns-3 px-4">
+      {images.map((image) => (
+        <a
+          href={image.src}
+          data-pswp-width={image.width}
+          data-pswp-height={image.height}
+          class="block rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg overflow-hidden"
+        >
           <Image
             src={image}
             alt={`Image from ${album.data.title} album`}
             format="avif"
             quality={50}
-            class="rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg"
+            class="w-full h-auto rounded-sm"
             loading="lazy"
           />
-        ))
-      }
+        </a>
+      ))}
     </div>
+    <script is:inline type="module">
+      import PhotoSwipeLightbox from 'photoswipe/lightbox';
+      import 'photoswipe/style.css';
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: '#pswp-gallery',
+        children: 'a',
+        pswpModule: () => import('photoswipe'),
+        slideEffect: 'fade',
+        wheelToZoom: false,
+        pinchToZoom: false,
+        doubleTapToZoom: false,
+        clickToCloseNonZoomable: true,
+      });
+      lightbox.init();
+    </script>
 
     <div class="mt-12 flex justify-center">
       <a

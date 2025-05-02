@@ -7,6 +7,8 @@ import Layout from '@/layouts/Layout.astro'
 import PageHead from '@/components/PageHead.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util';
+// PhotoSwipe core styles
+import 'photoswipe/style.css';
 
 export async function getStaticPaths() {
   const allAlbums = await getCollection('albums');
@@ -51,20 +53,69 @@ const images: ImageMetadata[] = await getAlbumImages(album.id);
       </div>
     )}
 
-    <div class="mx-auto container my-8 sm:columns-1 md:columns-2 lg:columns-3 px-4">
-      {
-        images.map((image) => (
+    <div id="pswp-gallery" class="mx-auto container my-8 sm:columns-1 md:columns-2 lg:columns-3 px-4">
+      {images.map((image) => (
+        <a
+          href={image.src}
+          data-pswp-width={image.width}
+          data-pswp-height={image.height}
+          class="block rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg overflow-hidden"
+        >
           <Image
             src={image}
             alt={`Image from ${album.data.title} album`}
             format="avif"
             quality={50}
-            class="rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg"
+            class="w-full h-auto rounded-sm"
             loading="lazy"
           />
-        ))
-      }
+        </a>
+      ))}
     </div>
+    <!-- load this script on the client so Vite can bundle the imports -->
+    <script client:load type="module">
+      // DEBUG: PhotoSwipe init script (bundled)
+      console.log('[PSWP] init script loaded');
+      import PhotoSwipeLightbox from 'photoswipe/lightbox';
+      
+      const arrowSVG = `
+        <svg aria-hidden="true" class="pswp__icn" viewBox="0 0 100 125" width="40" height="50">
+          <path d="M5,50L50,5l3,3L11,50l42,42l-3,3L5,50z M92,95l3-3L53,50L95,8l-3-3L47,50L92,95z"/>
+        </svg>
+      `;
+      const closeSVG = `
+        <svg aria-hidden="true" class="pswp__icn" viewBox="0 0 100 100" width="40" height="40">
+          <path d="M10,10 L90,90 M90,10 L10,90" stroke-width="10" stroke-linecap="round"/>
+        </svg>
+      `;
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: '#pswp-gallery',
+        children: 'a',
+        pswpModule: () => import('photoswipe'),
+        slideEffect: 'fade',
+        wheelToZoom: false,
+        pinchToZoom: false,
+        doubleTapToZoom: false,
+        clickToCloseNonZoomable: true,
+        arrowPrevSVG: arrowSVG,
+        arrowNextSVG: arrowSVG,
+        closeSVG: closeSVG,
+        mainClass: 'pswp--custom-icons',
+      });
+      lightbox.init();
+      // DEBUG: expose instance and confirm init
+      window.__psLightbox = lightbox;
+      console.log('[PSWP] Lightbox initialized:', lightbox);
+    </script>
+    
+    <style is:global>
+      .pswp--custom-icons {
+        --pswp-icon-color: #00fffc;
+        --pswp-icon-color-secondary: #333;
+      }
+      .pswp__icn-shadow { display: none; }
+    </style>
 
     <div class="mt-12 flex justify-center">
       <a

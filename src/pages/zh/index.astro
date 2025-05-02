@@ -51,7 +51,7 @@ const blog = await getRecentPosts(SITE.featuredPostCount, lang)
         href={translatePath('/blog')}
         class={buttonVariants({ variant: 'ghost' }) + ' group'}
       >
-        See all posts <span
+        {t('home.seeAllPosts')} <span
           class="ml-1.5 transition-transform group-hover:translate-x-1"
           >&rarr;</span>
       </Link>
