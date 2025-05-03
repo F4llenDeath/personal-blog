@@ -10,11 +10,19 @@ interface Props {
 }
 
 const { links } = Astro.props
+import { getLangFromUrl } from '@/i18n/util'
+const lang = getLangFromUrl(Astro.url)
+const displayLinks = links.map(link => {
+  if (link.label === 'RSS' && link.zhHref) {
+    return { ...link, href: lang === 'zh' ? link.zhHref : link.href }
+  }
+  return link
+})
 ---
 
 <ul class="flex flex-wrap gap-2" role="list">
   {
-    links.map(({ href, label }) => (
+    displayLinks.map(({ href, label }) => (
       <li>
         <Link
           href={href}
