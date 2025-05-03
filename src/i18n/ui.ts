@@ -7,7 +7,6 @@ export const defaultLang = 'en';
 
 export const ui = {
     en: {
-        'home.seeAllPosts': 'See all posts',
         'nav.blog': 'Blog',
         'nav.publications': 'Publications',
         'nav.tags': 'Tags',
@@ -23,7 +22,6 @@ export const ui = {
         'tags.collectionWith': 'A collection of posts tagged with',
     },
     zh: {
-        'home.seeAllPosts': '查看全部文章',
         'nav.blog': '博客',
         'nav.publications': '学术成果',
         'nav.tags': '标签',

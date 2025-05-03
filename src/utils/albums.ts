@@ -7,10 +7,10 @@ export async function getAlbumImages(albumId: string) {
       Object.entries(images).filter(([key]) => key.includes(albumId))
     );
 
-    const entries = Object.entries(images)
-      .sort(([pathA], [pathB]) => pathA.localeCompare(pathB));
     const resolvedImages = await Promise.all(
-      entries.map(([, loader]) => loader().then((mod) => mod.default))
+      Object.values(images).map((image) => image().then((mod) => mod.default))
     );
+  
+    resolvedImages.sort(() => Math.random() - 0.5);
     return resolvedImages;
   }
