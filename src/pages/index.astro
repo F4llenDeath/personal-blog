@@ -6,13 +6,8 @@ import { buttonVariants } from '@/components/ui/button'
 import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { getRecentPosts } from '@/lib/data-utils'
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
-const lang = getLangFromUrl(Astro.url)
-const t = useTranslations(lang)
-const translatePath = useTranslatedPath(lang)
-// Load latest posts for current locale
-const blog = await getRecentPosts(SITE.featuredPostCount, lang)
+const blog = await getRecentPosts(SITE.featuredPostCount)
 ---
 
 <Layout>
@@ -51,7 +46,7 @@ const blog = await getRecentPosts(SITE.featuredPostCount, lang)
     </ul>
     <div class="flex justify-center">
       <Link
-        href={translatePath('/blog')}
+        href="/blog"
         class={buttonVariants({ variant: 'ghost' }) + ' group'}
       >
         {t('home.seeAllPosts')} <span

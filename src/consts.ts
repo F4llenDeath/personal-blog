@@ -45,8 +45,6 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     href: '/rss.xml',
-    /** Chinese feed URL */
-    zhHref: '/zh/rss.xml',
     label: 'RSS',
   },
 ]

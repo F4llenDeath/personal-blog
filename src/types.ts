@@ -10,7 +10,6 @@ export type Site = {
 
 export type SocialLink = {
   href: string
-  zhHref?: string
   label: string
 }
 
