@@ -6,27 +6,20 @@ import { getLangFromUrl, useTranslations } from '@/i18n/util';
 import { defaultLang } from '@/i18n/ui';
 import { getCollection } from 'astro:content';
 import AlbumCard from '@/components/AlbumCard.astro';
-import { getImageDimensions } from '@/utils/images'
+import { getImageDimensions } from '@/utils/images';
 
-// Determine locale, then load content for that locale
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const allAlbums = await getCollection('albums');
 // Filter by locale
 const albums = allAlbums.filter((album) => (album.data.lang ?? defaultLang) === lang);
+// Precompute cover dimensions
 const albumsWithDims = await Promise.all(
   albums.map(async (album) => {
-    const { width, height } = await getImageDimensions(album.data.cover)
-    return {
-      id: album.id,
-      title: album.data.title,
-      description: album.data.description,
-      cover: album.data.cover,
-      width,
-      height,
-    }
+    const { width, height } = await getImageDimensions(album.data.cover);
+    return { id: album.id, title: album.data.title, description: album.data.description, cover: album.data.cover, width, height };
   })
-)
+);
 ---
 
 <Layout>

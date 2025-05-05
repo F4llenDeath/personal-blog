@@ -22,8 +22,8 @@ const { album } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
-// Use the URL param (base id without .zh) to load images with dimensions
 const baseId = Astro.params.id;
+// Load all original images with their dimensions
 const images: AlbumImage[] = await getAlbumImages(baseId);
 ---
 <Layout>
