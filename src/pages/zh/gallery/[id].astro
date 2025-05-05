@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import { getAlbumImages } from "@/utils/albums";
+import { getAlbumImages } from '@/utils/albums';
+import type { AlbumImage } from '@/utils/albums';
 import { Image } from "astro:assets";
 import Layout from '@/layouts/Layout.astro'
 import PageHead from '@/components/PageHead.astro';
@@ -21,9 +22,9 @@ const { album } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
-// Use the URL param (base id without .zh) to load images
+// Use the URL param (base id without .zh) to load images with dimensions
 const baseId = Astro.params.id;
-const images: ImageMetadata[] = await getAlbumImages(baseId);
+const images: AlbumImage[] = await getAlbumImages(baseId);
 ---
 <Layout>
   <PageHead slot="head" title={album.data.title} description={album.data.description} />
@@ -43,18 +44,18 @@ const images: ImageMetadata[] = await getAlbumImages(baseId);
     )}
 
     <div class="mx-auto container my-8 sm:columns-1 md:columns-2 lg:columns-3 px-4">
-      {
-        images.map((image) => (
-          <Image
-            src={image}
-            alt={`Image from ${album.data.title} album`}
-            format="avif"
-            quality={50}
-            class="rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg"
-            loading="lazy"
-          />
-        ))
-      }
+      {images.map(({ src, width, height }) => (
+        <Image
+          src={src}
+          alt={`Image from ${album.data.title} album`}
+          width={width}
+          height={height}
+          format="avif"
+          quality={50}
+          class="rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg"
+          loading="lazy"
+        />
+      ))}
     </div>
 
     <div class="mt-12 flex justify-center">

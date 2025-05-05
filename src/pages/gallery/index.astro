@@ -6,14 +6,27 @@ import { getLangFromUrl, useTranslations } from '@/i18n/util';
 import { defaultLang } from '@/i18n/ui';
 import { getCollection } from 'astro:content';
 import AlbumCard from '@/components/AlbumCard.astro';
+import { getImageDimensions } from '@/utils/images'
 
 // Determine locale, then load content for that locale
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const allAlbums = await getCollection('albums');
-const albums = allAlbums.filter(
-  (album) => (album.data.lang ?? defaultLang) === lang
-);
+// Filter by locale
+const albums = allAlbums.filter((album) => (album.data.lang ?? defaultLang) === lang);
+const albumsWithDims = await Promise.all(
+  albums.map(async (album) => {
+    const { width, height } = await getImageDimensions(album.data.cover)
+    return {
+      id: album.id,
+      title: album.data.title,
+      description: album.data.description,
+      cover: album.data.cover,
+      width,
+      height,
+    }
+  })
+)
 ---
 
 <Layout>
@@ -23,12 +36,14 @@ const albums = allAlbums.filter(
   <h1 class="mb-4 text-2xl font-medium">{t('nav.gallery')}</h1>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    {albums.map(({ id, data }) => (
+    {albumsWithDims.map(({ id, title, description, cover, width, height }) => (
       <AlbumCard
         id={id}
-        title={data.title}
-        description={data.description}
-        cover={data.cover}
+        title={title}
+        description={description}
+        cover={cover}
+        width={width}
+        height={height}
       />
     ))}
   </div>
