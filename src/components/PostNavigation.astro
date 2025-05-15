@@ -6,6 +6,10 @@ import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
 const { prevPost, nextPost } = Astro.props
+const getSlug = (id: string) => {
+  const parts = id.split('/')
+  return parts.length > 1 ? parts.slice(0, -1).join('/') : id
+}
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
@@ -13,7 +17,7 @@ const translatePath = useTranslatedPath(lang)
 
 <nav class="col-start-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
   <Link
-    href={nextPost ? translatePath(`/blog/${nextPost.id}`) : '#'}
+    href={nextPost ? translatePath(`/blog/${getSlug(nextPost.id)}`) : '#'}
     class={cn(
       buttonVariants({ variant: 'outline' }),
       'rounded-xl group flex items-center justify-start size-full',
@@ -33,7 +37,7 @@ const translatePath = useTranslatedPath(lang)
     </div>
   </Link>
   <Link
-    href={prevPost ? translatePath(`/blog/${prevPost.id}`) : '#'}
+    href={prevPost ? translatePath(`/blog/${getSlug(prevPost.id)}`) : '#'}
     class={cn(
       buttonVariants({ variant: 'outline' }),
       'rounded-xl group flex items-center justify-end size-full',

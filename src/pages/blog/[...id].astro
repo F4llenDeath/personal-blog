@@ -16,14 +16,18 @@ import { getLangFromUrl, formatLocalizedDate, useTranslations, useTranslatedPath
 
 export async function getStaticPaths() {
   const posts = await getAllPosts()
-  return posts.map((post) => ({
-    params: { id: post.id },
-    props: post,
-  }))
+  return posts.map((post) => {
+    const parts = post.id.split('/')
+    const slug = parts.slice(0, -1).join('/')
+    return {
+      params: { id: slug },
+      props: post,
+    }
+  })
 }
 
 const post = Astro.props
-const currentPostId = Astro.params.id
+const currentPostId = post.id
 const { Content, headings } = await render(post)
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)

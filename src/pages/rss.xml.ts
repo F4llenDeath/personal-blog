@@ -6,17 +6,23 @@ import { getAllPosts } from '@/lib/data-utils'
 export async function GET(context: APIContext) {
   try {
     const posts = await getAllPosts()
-
+    const items = posts.map((post) => {
+      const html = post.rendered?.html
+      const parts = post.id.split('/')
+      const slug = parts.length > 1 ? parts.slice(0, -1).join('/') : post.id
+      return {
+        title: post.data.title,
+        description: post.data.description,
+        pubDate: post.data.date,
+        link: `/blog/${slug}/`,
+        content: html,
+      }
+    })
     return rss({
       title: SITE.title,
       description: SITE.description,
       site: context.site ?? SITE.href,
-      items: posts.map((post) => ({
-        title: post.data.title,
-        description: post.data.description,
-        pubDate: post.data.date,
-        link: `/blog/${post.id}/`,
-      })),
+      items,
     })
   } catch (error) {
     console.error('Error generating RSS feed:', error)

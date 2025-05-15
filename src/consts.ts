@@ -4,7 +4,7 @@ export const SITE: Site = {
   title: 'F4llenDeath',
   description:
     '',
-  href: 'https://astro-erudite.vercel.app',
+  href: 'https://www.f4llendeath.me',
   author: 'F4llenDeath',
   locale: 'en-US',
   featuredPostCount: 2,
@@ -45,7 +45,6 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     href: '/rss.xml',
-    /** Chinese feed URL */
     zhHref: '/zh/rss.xml',
     label: 'RSS',
   },

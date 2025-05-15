@@ -29,12 +29,12 @@ const publications = defineCollection({
 
 const albums = defineCollection({
   type: "data",
-  schema: () =>
+  schema: ({ image }) =>
     z.object({
       lang: z.union([z.literal('en'), z.literal('zh')]).optional(),
       title: z.string(),
       description: z.string().optional(),
-      cover: z.string(),
+      cover: image(),
     }),
 });
 

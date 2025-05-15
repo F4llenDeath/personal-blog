@@ -24,14 +24,18 @@ const publicationsByYear = sorted.reduce((acc, pub) => {
       <h2 class="mb-4 text-2xl font-medium">My Publications</h2>
         <div class="flex flex-col gap-4">
           {Object.entries(publicationsByYear)
-            .sort(([a], [b]) => parseInt(b) - parseInt(a)) // descending year
+            .sort(([a], [b]) => parseInt(b) - parseInt(a)) 
             .map(([year, pubs]) => (
               <section class="flex flex-col gap-y-4">
                 <div class="font-medium text-lg">{year}</div>
                 <ul class="flex flex-col gap-4">
                   {pubs.map(({ data }) => (
                     <li>
-                      <a href={data.href} class="flex gap-4 rounded-md p-4 hover:bg-muted" target="_blank">
+                      <a
+                        href={data.href}
+                        target="_blank"
+                        class="flex gap-4 rounded-md p-4 hover:bg-muted transition-colors duration-300 ease-in-out"
+                      >
                         <Icon name={data.icon} class="size-4 shrink-0" />
                         <div class="space-y-1">
                           <h3 class="text-sm font-medium leading-none">{data.title}</h3>

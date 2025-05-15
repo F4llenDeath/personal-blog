@@ -14,19 +14,22 @@ interface Props {
 }
 
 const { entry } = Astro.props
-// entry.body may be undefined; default to empty string to avoid errors
 const readTime = readingTime(entry.body ?? '')
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
 const formattedDate = formatLocalizedDate(entry.data.date, lang)
+const getSlug = (id: string) => {
+  const parts = id.split('/')
+  return parts.length > 1 ? parts.slice(0, -1).join('/') : id
+}
 ---
 
 <div
   class="hover:bg-secondary/50 rounded-xl border p-4 transition-colors duration-300 ease-in-out"
 >
   <Link
-    href={translatePath(`/${entry.collection}/${entry.id}`)}
+    href={translatePath(`/${entry.collection}/${getSlug(entry.id)}`)}
     class="flex flex-col gap-4 sm:flex-row"
   >
     {

@@ -6,29 +6,13 @@ import { getLangFromUrl, useTranslations } from '@/i18n/util';
 import { defaultLang } from '@/i18n/ui';
 import { getCollection } from 'astro:content';
 import AlbumCard from '@/components/AlbumCard.astro';
-import { getImageDimensions } from '@/utils/images'
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-// Load all albums then filter by locale
 const allAlbums = await getCollection('albums');
-// Filter by locale
-const albums = allAlbums.filter((album) => (album.data.lang ?? defaultLang) === lang);
-// Compute image dimensions for each album cover, and derive baseId
-const albumsWithDims = await Promise.all(
-  albums.map(async (album) => {
-    const { width, height } = await getImageDimensions(album.data.cover)
-    const baseId = album.id.replace(/\.zh$/, '')
-    return {
-      id: baseId,
-      title: album.data.title,
-      description: album.data.description,
-      cover: album.data.cover,
-      width,
-      height,
-    }
-  })
-)
+const albums = allAlbums.filter(
+  (album) => (album.data.lang ?? defaultLang) === lang
+);
 ---
 
 <Layout>
@@ -38,15 +22,16 @@ const albumsWithDims = await Promise.all(
   <h1 class="mb-4 text-2xl font-medium">{t('nav.gallery')}</h1>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    {albumsWithDims.map(({ id, title, description, cover, width, height }) => (
-      <AlbumCard
-        id={id}
-        title={title}
-        description={description}
-        cover={cover}
-        width={width}
-        height={height}
-      />
-    ))}
+    {albums.map(({ id, data }) => {
+      const baseId = id.replace(/\.zh$/, '');
+      return (
+        <AlbumCard
+          id={baseId}
+          title={data.title}
+          description={data.description}
+          cover={data.cover}
+        />
+      );
+    })}
   </div>
 </Layout>

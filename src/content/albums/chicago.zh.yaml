@@ -5,4 +5,4 @@ description: |
 
   本相册捕捉了密歇根湖畔的经典天际线、千禧公园“云门”（The Bean）的镜面倒影，以及威克公园（Wicker Park）和海德公园（Hyde Park）等社区的历史风情。画面中既有哥特复兴风格的《芝加哥论坛报大厦》，也有现代派的约翰·汉考克中心，全城的爵士与布鲁斯乐声在街头巷尾回荡，招牌的深盘披萨与湖面落日同样令人难忘。
 
-cover: /originals/chicago/cover.jpeg
+cover: ./chicago/cover.jpeg
