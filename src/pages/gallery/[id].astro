@@ -42,17 +42,20 @@ const images: ImageMetadata[] = await getAlbumImages(baseId);
     { label: album.data.title }
   ]} />
   <main class="text-center my-16 mb-32">
-    <h1 class="mb-6 text-4xl font-bold sm:text-5xl">{album.data.title}</h1>
+    <div class="mx-auto container px-4">
+      <h1 class="mb-6 text-4xl font-bold sm:text-5xl">{album.data.title}</h1>
 
-    {album.data.description && (
-      <div class="prose mb-8 space-y-4">
-        {album.data.description.split('\n\n').map((para) => (
-          <p>{para}</p>
-        ))}
-      </div>
-    )}
+      {album.data.description && (
+        <div class="prose mb-8 space-y-4">
+          {album.data.description.split('\n\n').map((para) => (
+            <p>{para}</p>
+          ))}
+        </div>
+      )}
+    </div>
 
-    <div class="mx-auto container my-8 sm:columns-1 md:columns-2 lg:columns-3 px-4">
+    <section class="gallery-fullbleed my-8">
+      <div class="w-full sm:columns-1 md:columns-2 lg:columns-3 px-4">
       {
         images.map((image) => (
           <Image
@@ -65,7 +68,8 @@ const images: ImageMetadata[] = await getAlbumImages(baseId);
           />
         ))
       }
-    </div>
+      </div>
+    </section>
 
     <div class="mt-12 flex justify-center">
       <a

@@ -108,3 +108,17 @@
     @apply transition-none!;
   }
 }
+
+/* full-bleed gallery section */
+.gallery-fullbleed {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.gallery-fullbleed > div {
+  max-width: none;
+  width: 100%;
+}
