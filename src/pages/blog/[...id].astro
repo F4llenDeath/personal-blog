@@ -12,7 +12,7 @@ import { readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { render } from 'astro:content'
-import { getLangFromUrl, formatLocalizedDate, useTranslations, useTranslatedPath } from '@/i18n/util'
+import { getLangFromUrl, formatLocalizedDate, useTranslatedPath } from '@/i18n/util'
 
 export async function getStaticPaths() {
   const posts = await getAllPosts()
@@ -30,7 +30,6 @@ const post = Astro.props
 const currentPostId = post.id
 const { Content, headings } = await render(post)
 const lang = getLangFromUrl(Astro.url)
-const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
 const { next, prev } = await getAdjacentPosts(currentPostId, lang)
 ---

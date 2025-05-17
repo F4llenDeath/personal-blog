@@ -7,6 +7,7 @@ import Layout from '@/layouts/Layout.astro'
 import PageHead from '@/components/PageHead.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util';
+import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
   const allAlbums = await getCollection('albums');
@@ -34,6 +35,7 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const baseId = Astro.params.id;
 const images: ImageMetadata[] = await getAlbumImages(baseId);
+const downloadUrl = 'https://mega.nz/folder/d20X2ZYS#cLsYdzU0cml5TDpe5emXpg';
 ---
 <Layout>
   <PageHead slot="head" title={album.data.title} description={album.data.description} />
@@ -54,6 +56,20 @@ const images: ImageMetadata[] = await getAlbumImages(baseId);
       )}
     </div>
 
+    {downloadUrl && (
+      <div class="mt-12 flex justify-center">
+        <a
+          href={downloadUrl}
+          target="_blank"
+          rel="noopener"
+          class="group flex w-fit items-center gap-3 rounded-xl border border-border px-6 py-4 transition hover:bg-secondary/50"
+        >
+          <Icon name="lucide:cloud-download" class="size-5 text-foreground" />
+          <span class="font-semibold text-foreground">{t('gallery.download_all_originals')}</span>
+        </a>
+      </div>
+    )}
+
     <section class="gallery-fullbleed my-8">
       <div class="w-full sm:columns-1 md:columns-2 lg:columns-3 px-4">
       {
@@ -62,7 +78,9 @@ const images: ImageMetadata[] = await getAlbumImages(baseId);
             src={image}
             alt={`Image from ${album.data.title} album`}
             format="avif"
-            quality={50}
+            quality={30}
+            widths={[400, 800, 1200, 1600]}
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
             class="rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg"
             loading="lazy"
           />

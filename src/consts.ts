@@ -36,7 +36,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'Instagram',
   },
   {
-    href: 'mailto:yangxicheng2022@outlook.com',
+    href: 'mailto:f4llendeath@proton.me',
     label: 'Email',
   },
   {

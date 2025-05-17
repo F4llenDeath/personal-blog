@@ -6,13 +6,10 @@ import { buttonVariants } from '@/components/ui/button'
 import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { getRecentPosts } from '@/lib/data-utils'
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
+import { getLangFromUrl, useTranslatedPath } from '@/i18n/util'
 
-// Determine current language (should be 'zh' on /zh)
 const lang = getLangFromUrl(Astro.url)
-const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
-// Load latest posts for current locale
 const blog = await getRecentPosts(SITE.featuredPostCount, lang)
 ---
 
@@ -30,9 +27,6 @@ const blog = await getRecentPosts(SITE.featuredPostCount, lang)
         <p class="text-muted-foreground mb-2 text-sm">
           你好👋！我是一名生物医学工程专业学生，
           这个博客是我的个人空间，会分享一些技术笔记、学习心得和日常生活。  
-        </p>
-        <p class="italic text-muted-foreground text-sm">
-          摔死(bushi 
         </p>
       </div>
     </div>
