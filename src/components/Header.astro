@@ -3,8 +3,6 @@ import Link from '@/components/Link.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
 import MobileMenu from '@/components/ui/mobile-menu'
 import { SITE } from '@/consts'
-import { Image } from 'astro:assets'
-import logo from '../../public/static/avatar.png'
 import { getLangFromUrl, useTranslations, useTranslatedPath } from 'src/i18n/util.ts'
 
 const lang = getLangFromUrl(Astro.url)
@@ -20,7 +18,7 @@ const translatePath = useTranslatedPath(lang)
     class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-4 p-4"
   >
     <Link href={translatePath('/')} class="flex shrink-0 items-center gap-2 text-xl font-medium">
-      <Image src={logo} alt="Logo" class="size-8" />
+      <img src="/static/avatar.png" alt="Logo" class="size-8" />
       {SITE.title}
     </Link>
     <div class="flex items-center gap-2 md:gap-4">
