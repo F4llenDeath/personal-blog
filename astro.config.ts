@@ -20,6 +20,8 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from '@tailwindcss/vite'
 
+import removeOriginalImages from './removeOriginalImages';
+
 export default defineConfig({
   site: 'https://www.f4llendeath.me',
   integrations: [
@@ -68,6 +70,7 @@ export default defineConfig({
     react(),
     sitemap(),
     icon(),
+    removeOriginalImages(),
   ],
   vite: {
     plugins: [tailwindcss()],
@@ -110,3 +113,5 @@ export default defineConfig({
     remarkPlugins: [remarkMath, remarkEmoji, remarkSectionize],
   },
 })
+
+
