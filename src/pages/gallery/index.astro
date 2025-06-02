@@ -1,18 +1,18 @@
 ---
+import AlbumCard from '@/components/AlbumCard.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import { defaultLang } from '@/i18n/ui'
+import { getLangFromUrl, useTranslations } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
-import PageHead from '@/components/PageHead.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
-import { getLangFromUrl, useTranslations } from '@/i18n/util';
-import { defaultLang } from '@/i18n/ui';
-import { getCollection } from 'astro:content';
-import AlbumCard from '@/components/AlbumCard.astro';
+import { getCollection } from 'astro:content'
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-const allAlbums = await getCollection('albums');
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const allAlbums = await getCollection('albums')
 const albums = allAlbums.filter(
-  (album) => (album.data.lang ?? defaultLang) === lang
-);
+  (album) => (album.data.lang ?? defaultLang) === lang,
+)
 ---
 
 <Layout>
@@ -21,14 +21,16 @@ const albums = allAlbums.filter(
 
   <h1 class="mb-4 text-2xl font-medium">{t('nav.gallery')}</h1>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    {albums.map(({ id, data }) => (
-      <AlbumCard
-        id={id}
-        title={data.title}
-        description={data.description}
-        cover={data.cover}
-      />
-    ))}
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    {
+      albums.map(({ id, data }) => (
+        <AlbumCard
+          id={id}
+          title={data.title}
+          description={data.description}
+          cover={data.cover}
+        />
+      ))
+    }
   </div>
 </Layout>

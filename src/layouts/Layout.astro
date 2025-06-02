@@ -7,7 +7,6 @@ import Head from '@/components/Head.astro'
 import Header from '@/components/Header.astro'
 import { cn } from '@/lib/utils'
 
-import LanguagePicker from '@/components/LanguagePicker.astro'
 import { getLangFromUrl } from 'src/i18n/util.ts'
 
 const { isWide = false } = Astro.props
@@ -32,13 +31,6 @@ const lang = getLangFromUrl(Astro.url)
           <slot />
         </div>
       </main>
-
-      <!-- Language Switcher -->
-      <div
-        class="text-muted-foreground mx-auto mt-8 max-w-3xl px-4 text-center text-sm"
-      >
-        <LanguagePicker />
-      </div>
       <Footer />
     </div>
   </body>

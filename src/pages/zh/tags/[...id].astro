@@ -2,10 +2,10 @@
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/lib/data-utils'
 import { Icon } from 'astro-icon/components'
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
 export async function getStaticPaths() {
   const tagMap = await getAllTags('zh')

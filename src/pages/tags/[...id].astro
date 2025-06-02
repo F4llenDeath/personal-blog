@@ -2,9 +2,9 @@
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/lib/data-utils'
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 import { Icon } from 'astro-icon/components'
 
 export async function getStaticPaths() {
@@ -44,7 +44,7 @@ const { tag, posts } = Astro.props
     ]}
   />
 
-    <div class="flex flex-wrap items-center gap-2">
+  <div class="flex flex-wrap items-center gap-2">
     <h1 class="text-3xl font-medium">{t('tags.postsTaggedWith')}</h1>
     <span
       class="bg-secondary flex items-center gap-x-1 rounded-full px-4 py-2 text-2xl font-medium"

@@ -1,0 +1,61 @@
+---
+import { Button } from '@/components/ui/button'
+import { defaultLang, languages } from '@/i18n/ui'
+import { getLangFromUrl } from '@/i18n/util.ts'
+import { Icon } from 'astro-icon/components'
+
+const lang = getLangFromUrl(Astro.url)
+const otherLang =
+  lang === defaultLang
+    ? (Object.keys(languages).find(
+        (l) => l !== defaultLang,
+      )! as keyof typeof languages)
+    : defaultLang
+
+const pathname = Astro.url.pathname
+let segments = pathname.split('/').filter(Boolean)
+if (lang !== defaultLang) {
+  segments = segments.slice(1)
+}
+---
+
+<Button
+  id="language-toggle"
+  variant="outline"
+  size="icon"
+  title={`Switch language to ${languages[otherLang]}`}
+  aria-label={`Switch language to ${languages[otherLang]}`}
+  data-lang={lang}
+  data-default-lang={defaultLang}
+  data-other-lang={otherLang}
+>
+  <Icon name="lucide:languages" class="size-4" />
+  <span class="sr-only">{languages[otherLang]}</span>
+</Button>
+
+<script is:inline data-astro-rerun>
+  function handleLanguageToggleClick(event) {
+    event.preventDefault()
+    const toggle = document.getElementById('language-toggle')
+    if (!toggle) return
+    const lang = toggle.dataset.lang || ''
+    const defaultLang = toggle.dataset.defaultLang || ''
+    const otherLang = toggle.dataset.otherLang || ''
+    const pathname = window.location.pathname
+    let segments = pathname.split('/').filter(Boolean)
+    if (lang !== defaultLang) segments = segments.slice(1)
+    const newPath =
+      otherLang === defaultLang
+        ? `/${segments.join('/')}`
+        : `/${otherLang}/${segments.join('/')}`
+    window.location.pathname = newPath
+  }
+
+  function initLanguageToggle() {
+    const toggle = document.getElementById('language-toggle')
+    if (toggle) toggle.addEventListener('click', handleLanguageToggleClick)
+  }
+
+  initLanguageToggle()
+  document.addEventListener('astro:after-swap', initLanguageToggle)
+</script>

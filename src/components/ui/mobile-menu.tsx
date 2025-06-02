@@ -36,9 +36,10 @@ const MobileMenu = ({ lang }: Props) => {
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={(val) => setIsOpen(val)}>
-      <DropdownMenuTrigger asChild
+      <DropdownMenuTrigger
+        asChild
         onClick={() => {
-          setIsOpen((val) => !val);
+          setIsOpen((val) => !val)
         }}
       >
         <Button
@@ -53,22 +54,34 @@ const MobileMenu = ({ lang }: Props) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-background">
         <DropdownMenuItem asChild>
-          <a href={`${lang === 'en' ? '' : '/' + lang}/blog`} className="w-full text-lg font-medium capitalize">
+          <a
+            href={`${lang === 'en' ? '' : '/' + lang}/blog`}
+            className="w-full text-lg font-medium capitalize"
+          >
             {t('nav.blog')}
           </a>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <a href={`${lang === 'en' ? '' : '/' + lang}/publications`} className="w-full text-lg font-medium capitalize">
+          <a
+            href={`${lang === 'en' ? '' : '/' + lang}/publications`}
+            className="w-full text-lg font-medium capitalize"
+          >
             {t('nav.publications')}
           </a>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <a href={`${lang === 'en' ? '' : '/' + lang}/gallery`} className="w-full text-lg font-medium capitalize">
+          <a
+            href={`${lang === 'en' ? '' : '/' + lang}/gallery`}
+            className="w-full text-lg font-medium capitalize"
+          >
             {t('nav.gallery')}
           </a>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <a href={`${lang === 'en' ? '' : '/' + lang}/tags`} className="w-full text-lg font-medium capitalize">
+          <a
+            href={`${lang === 'en' ? '' : '/' + lang}/tags`}
+            className="w-full text-lg font-medium capitalize"
+          >
             {t('nav.tags')}
           </a>
         </DropdownMenuItem>

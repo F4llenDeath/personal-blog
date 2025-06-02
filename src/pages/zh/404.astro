@@ -3,12 +3,12 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Link from '@/components/Link.astro'
 import PageHead from '@/components/PageHead.astro'
 import { buttonVariants } from '@/components/ui/button'
+import { getLangFromUrl } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
 import { cn } from '@/lib/utils'
-import { getLangFromUrl } from '@/i18n/util'
 
-const lang = getLangFromUrl(Astro.url) 
-const homeHref = lang === 'en' ? '/' : `/${lang}/` 
+const lang = getLangFromUrl(Astro.url)
+const homeHref = lang === 'en' ? '/' : `/${lang}/`
 ---
 
 <Layout>
@@ -32,4 +32,4 @@ const homeHref = lang === 'en' ? '/' : `/${lang}/`
   </section>
 </Layout>
 
- //this page does not work since Astro only uses one global 404.astro by default
+//this page does not work since Astro only uses one global 404.astro by default

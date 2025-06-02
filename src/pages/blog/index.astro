@@ -2,9 +2,9 @@
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
+import { getLangFromUrl, useTranslations } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
 import { getAllPosts, groupPostsByYear } from '@/lib/data-utils'
-import { getLangFromUrl, useTranslations } from '@/i18n/util'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -12,7 +12,6 @@ const allPosts = await getAllPosts(lang)
 
 const postsByYear = groupPostsByYear(allPosts)
 const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
-
 ---
 
 <Layout>
@@ -40,6 +39,4 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
       ))
     }
   </div>
-
-
 </Layout>

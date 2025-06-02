@@ -2,6 +2,7 @@
 import Link from '@/components/Link.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { ICON_MAP } from '@/consts'
+import { getLangFromUrl } from '@/i18n/util'
 import type { SocialLink } from '@/types'
 import { Icon } from 'astro-icon/components'
 
@@ -10,9 +11,8 @@ interface Props {
 }
 
 const { links } = Astro.props
-import { getLangFromUrl } from '@/i18n/util'
 const lang = getLangFromUrl(Astro.url)
-const displayLinks = links.map(link => {
+const displayLinks = links.map((link) => {
   if (link.label === 'RSS' && link.zhHref) {
     return { ...link, href: lang === 'zh' ? link.zhHref : link.href }
   }

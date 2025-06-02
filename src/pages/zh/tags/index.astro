@@ -3,9 +3,9 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Link from '@/components/Link.astro'
 import PageHead from '@/components/PageHead.astro'
 import { badgeVariants } from '@/components/ui/badge'
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
 import { getSortedTags } from '@/lib/data-utils'
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 import { Icon } from 'astro-icon/components'
 
 const lang = getLangFromUrl(Astro.url)

@@ -1,9 +1,9 @@
 ---
 import Link from '@/components/Link.astro'
 import { buttonVariants } from '@/components/ui/button'
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/util'
 import { cn } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util'
 
 const { prevPost, nextPost } = Astro.props
 const getSlug = (id: string) => {
@@ -30,7 +30,9 @@ const translatePath = useTranslatedPath(lang)
       class="mr-2 size-4 transition-transform group-hover:-translate-x-1"
     />
     <div class="flex flex-col items-start overflow-hidden text-wrap">
-      <span class="text-muted-foreground text-left text-xs">{t('blog.nextPost')}</span>
+      <span class="text-muted-foreground text-left text-xs"
+        >{t('blog.nextPost')}</span
+      >
       <span class="w-full text-left text-sm text-ellipsis">
         {nextPost?.data.title || t('blog.latestPost')}
       </span>
@@ -46,7 +48,8 @@ const translatePath = useTranslatedPath(lang)
     aria-disabled={!prevPost}
   >
     <div class="flex flex-col items-end overflow-hidden text-wrap">
-      <span class="text-muted-foreground text-right text-xs">{t('blog.prevPost')}</span
+      <span class="text-muted-foreground text-right text-xs"
+        >{t('blog.prevPost')}</span
       >
       <span class="w-full text-right text-sm text-ellipsis">
         {prevPost?.data.title || t('blog.lastPost')}

@@ -2,8 +2,7 @@ import type { IconMap, SocialLink, Site } from '@/types'
 
 export const SITE: Site = {
   title: 'F4llenDeath',
-  description:
-    '',
+  description: '',
   href: 'https://www.f4llendeath.me',
   author: 'F4llenDeath',
   locale: 'en-US',
@@ -57,6 +56,6 @@ export const ICON_MAP: IconMap = {
   Twitter: 'lucide:twitter',
   Email: 'lucide:mail',
   RSS: 'lucide:rss',
-  "500px": 'lucide:aperture',
+  '500px': 'lucide:aperture',
   Instagram: 'lucide:instagram',
 }

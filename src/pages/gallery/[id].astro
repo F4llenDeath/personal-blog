@@ -1,19 +1,19 @@
 ---
-import { getCollection } from "astro:content";
-import { defaultLang } from '@/i18n/ui';
-import { getAlbumImages } from "@/utils/albums";
-import { Image } from "astro:assets";
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import { defaultLang } from '@/i18n/ui'
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
-import PageHead from '@/components/PageHead.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/util';
-import { Icon } from 'astro-icon/components';
+import { getAlbumImages } from '@/utils/albums'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
-  const allAlbums = await getCollection('albums');
+  const allAlbums = await getCollection('albums')
   const albums = allAlbums.filter(
-    (album) => (album.data.lang ?? defaultLang) === defaultLang
-  );
+    (album) => (album.data.lang ?? defaultLang) === defaultLang,
+  )
 
   const paths = albums.map((album) => {
     return {
@@ -23,89 +23,110 @@ export async function getStaticPaths() {
       props: {
         album,
       },
-    };
-  });
+    }
+  })
 
-  return paths;
+  return paths
 }
 
-const { album } = Astro.props;
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-const translatePath = useTranslatedPath(lang);
-const baseId = Astro.params.id;
-const images: ImageMetadata[] = await getAlbumImages(baseId);
-const downloadUrl = 'https://mega.nz/folder/d20X2ZYS#cLsYdzU0cml5TDpe5emXpg';
+const { album } = Astro.props
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
+const baseId = Astro.params.id
+const images: ImageMetadata[] = await getAlbumImages(baseId)
+const downloadUrl = 'https://mega.nz/folder/d20X2ZYS#cLsYdzU0cml5TDpe5emXpg'
 ---
+
 <Layout>
-  <PageHead slot="head" title={album.data.title} description={album.data.description} />
-  <Breadcrumbs items={[
-    { href: translatePath('/gallery'), label: 'nav.gallery', icon: 'lucide:image' },
-    { label: album.data.title }
-  ]} />
-  <main class="text-center my-16 mb-32">
-    <div class="mx-auto container px-4">
+  <PageHead
+    slot="head"
+    title={album.data.title}
+    description={album.data.description}
+  />
+  <Breadcrumbs
+    items={[
+      {
+        href: translatePath('/gallery'),
+        label: 'nav.gallery',
+        icon: 'lucide:image',
+      },
+      { label: album.data.title },
+    ]}
+  />
+  <main class="my-16 mb-32 text-center">
+    <div class="container mx-auto px-4">
       <h1 class="mb-6 text-4xl font-bold sm:text-5xl">{album.data.title}</h1>
 
-      {album.data.description && (
-        <div class="prose mb-8 space-y-4">
-          {album.data.description.split('\n\n').map((para) => (
-            <p>{para}</p>
-          ))}
-        </div>
-      )}
+      {
+        album.data.description && (
+          <div class="prose mb-8 space-y-4">
+            {album.data.description.split('\n\n').map((para) => (
+              <p>{para}</p>
+            ))}
+          </div>
+        )
+      }
     </div>
 
-    {downloadUrl && (
-      <div class="mt-12 flex justify-center">
-        <a
-          href={downloadUrl}
-          target="_blank"
-          rel="noopener"
-          class="group flex w-fit items-center gap-3 rounded-xl border border-border px-6 py-4 transition hover:bg-secondary/50"
-        >
-          <Icon name="lucide:cloud-download" class="size-5 text-foreground" />
-          <span class="font-semibold text-foreground">{t('gallery.download_all_originals')}</span>
-        </a>
-      </div>
-    )}
+    {
+      downloadUrl && (
+        <div class="mt-12 flex justify-center">
+          <a
+            href={downloadUrl}
+            target="_blank"
+            rel="noopener"
+            class="group border-border hover:bg-secondary/50 flex w-fit items-center gap-3 rounded-xl border px-6 py-4 transition"
+          >
+            <Icon name="lucide:cloud-download" class="text-foreground size-5" />
+            <span class="text-foreground font-semibold">
+              {t('gallery.download_all_originals')}
+            </span>
+          </a>
+        </div>
+      )
+    }
 
     <section class="gallery-fullbleed my-8">
-      <div class="w-full sm:columns-1 md:columns-2 lg:columns-3 px-4">
-      {
-        images.map((image) => (
-          <Image
-            src={image}
-            alt={`Image from ${album.data.title} album`}
-            format="avif"
-            quality={30}
-            widths={[400, 800, 1200, 1600]}
-            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-            class="rounded-sm mb-4 border border-transparent hover:border-gray-300 transition-all duration-300 ease-in-out hover:shadow-lg"
-            loading="lazy"
-          />
-        ))
-      }
+      <div class="w-full px-4 sm:columns-1 md:columns-2 lg:columns-3">
+        {
+          images.map((image) => (
+            <Image
+              src={image}
+              alt={`Image from ${album.data.title} album`}
+              format="avif"
+              quality={30}
+              widths={[400, 800, 1200, 1600]}
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              class="mb-4 rounded-sm border border-transparent transition-all duration-300 ease-in-out hover:border-gray-300 hover:shadow-lg"
+              loading="lazy"
+            />
+          ))
+        }
       </div>
     </section>
 
     <div class="mt-12 flex justify-center">
       <a
         href={translatePath('/gallery')}
-        class="group flex w-fit items-center gap-3 rounded-xl border border-border px-6 py-4 transition hover:bg-secondary/50"
+        class="group border-border hover:bg-secondary/50 flex w-fit items-center gap-3 rounded-xl border px-6 py-4 transition"
       >
         <div class="text-left leading-none">
-          <div class="text-sm text-muted-foreground">{t('gallery.back')}</div>
-          <div class="font-semibold text-foreground">{t('nav.gallery')}</div>
+          <div class="text-muted-foreground text-sm">{t('gallery.back')}</div>
+          <div class="text-foreground font-semibold">{t('nav.gallery')}</div>
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="size-5 rotate-180 text-muted-foreground transition group-hover:text-foreground"
+          class="text-muted-foreground group-hover:text-foreground size-5 rotate-180 transition"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"></path>
         </svg>
       </a>
     </div>

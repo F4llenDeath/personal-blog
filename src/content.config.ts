@@ -25,10 +25,10 @@ const publications = defineCollection({
     published: z.coerce.date(),
     journal: z.string().optional(),
   }),
-});
+})
 
 const albums = defineCollection({
-  type: "data",
+  type: 'data',
   schema: ({ image }) =>
     z.object({
       lang: z.union([z.literal('en'), z.literal('zh')]).optional(),
@@ -36,10 +36,10 @@ const albums = defineCollection({
       description: z.string().optional(),
       cover: image(),
     }),
-});
+})
 
 export const collections = {
   blog,
-  publications, 
+  publications,
   albums,
 }

@@ -6,13 +6,17 @@ import TableOfContents from '@/components/TableOfContents.astro'
 import { badgeVariants } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import {
+  formatLocalizedDate,
+  getLangFromUrl,
+  useTranslatedPath,
+} from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
-import { getAdjacentPosts, getAllPosts, } from '@/lib/data-utils'
+import { getAdjacentPosts, getAllPosts } from '@/lib/data-utils'
 import { readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { render } from 'astro:content'
-import { getLangFromUrl, formatLocalizedDate, useTranslatedPath } from '@/i18n/util'
 
 export async function getStaticPaths() {
   const posts = await getAllPosts()
@@ -42,7 +46,11 @@ const { next, prev } = await getAdjacentPosts(currentPostId, lang)
     <div class="col-start-2">
       <Breadcrumbs
         items={[
-          { href: translatePath('/blog'), label: 'nav.blog', icon: 'lucide:archive' },
+          {
+            href: translatePath('/blog'),
+            label: 'nav.blog',
+            icon: 'lucide:archive',
+          },
           { label: post.data.title, icon: 'lucide:file-text' },
         ]}
       />
@@ -78,7 +86,7 @@ const { next, prev } = await getAdjacentPosts(currentPostId, lang)
         <div class="flex flex-wrap justify-center gap-2">
           {
             post.data.tags && post.data.tags.length > 0 ? (
-            post.data.tags.map((tag) => (
+              post.data.tags.map((tag) => (
                 <a
                   href={translatePath(`/tags/${tag}`)}
                   class={badgeVariants({ variant: 'secondary' })}

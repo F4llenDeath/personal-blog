@@ -1,9 +1,14 @@
 ---
+import LanguageToggle from '@/components/LanguageToggle.astro'
 import Link from '@/components/Link.astro'
 import ThemeToggle from '@/components/ThemeToggle.astro'
 import MobileMenu from '@/components/ui/mobile-menu'
 import { SITE } from '@/consts'
-import { getLangFromUrl, useTranslations, useTranslatedPath } from 'src/i18n/util.ts'
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from 'src/i18n/util.ts'
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -17,26 +22,42 @@ const translatePath = useTranslatedPath(lang)
   <div
     class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-4 p-4"
   >
-    <Link href={translatePath('/')} class="flex shrink-0 items-center gap-2 text-xl font-medium">
+    <Link
+      href={translatePath('/')}
+      class="flex shrink-0 items-center gap-2 text-xl font-medium"
+    >
       <img src="/static/avatar.png" alt="Logo" class="size-8" />
       {SITE.title}
     </Link>
     <div class="flex items-center gap-2 md:gap-4">
       <nav class="hidden items-center gap-4 text-sm sm:gap-6 md:flex">
-        <Link href={translatePath('/blog/')} class="text-foreground/60 hover:text-foreground/80 capitalize transition-colors">
+        <Link
+          href={translatePath('/blog/')}
+          class="text-foreground/60 hover:text-foreground/80 capitalize transition-colors"
+        >
           {t('nav.blog')}
         </Link>
-        <Link href={translatePath('/publications/')} class="text-foreground/60 hover:text-foreground/80 capitalize transition-colors">
+        <Link
+          href={translatePath('/publications/')}
+          class="text-foreground/60 hover:text-foreground/80 capitalize transition-colors"
+        >
           {t('nav.publications')}
         </Link>
-        <Link href={translatePath('/gallery/')} class="text-foreground/60 hover:text-foreground/80 capitalize transition-colors">
+        <Link
+          href={translatePath('/gallery/')}
+          class="text-foreground/60 hover:text-foreground/80 capitalize transition-colors"
+        >
           {t('nav.gallery')}
         </Link>
-        <Link href={translatePath('/tags/')} class="text-foreground/60 hover:text-foreground/80 capitalize transition-colors">
+        <Link
+          href={translatePath('/tags/')}
+          class="text-foreground/60 hover:text-foreground/80 capitalize transition-colors"
+        >
           {t('nav.tags')}
         </Link>
       </nav>
       <MobileMenu lang={lang} client:load transition:persist />
+      <LanguageToggle />
       <ThemeToggle transition:persist />
     </div>
   </div>

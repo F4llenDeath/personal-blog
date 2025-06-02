@@ -1,31 +1,31 @@
 ---
-import { getLangFromUrl, useTranslatedPath } from '@/i18n/util';
-import { Image } from 'astro:assets';
+import { getLangFromUrl, useTranslatedPath } from '@/i18n/util'
+import { Image } from 'astro:assets'
 
 export interface Props {
-  id: string;
-  title: string;
-  description?: string;
-  cover: ImageMetadata;
+  id: string
+  title: string
+  description?: string
+  cover: ImageMetadata
 }
 
-const { id, title, cover } = Astro.props;
-const lang = getLangFromUrl(Astro.url);
-const translatePath = useTranslatedPath(lang);
+const { id, title, cover } = Astro.props
+const lang = getLangFromUrl(Astro.url)
+const translatePath = useTranslatedPath(lang)
 ---
 
 <a
   href={translatePath(`/gallery/${id}`)}
-  class="group block rounded-xl border p-4 transition-colors duration-300 ease-in-out hover:bg-secondary/50"
+  class="group hover:bg-secondary/50 block rounded-xl border p-4 transition-colors duration-300 ease-in-out"
 >
   <Image
     src={cover}
     alt={title}
     format="avif"
     quality="mid"
-    class="w-full aspect-[4/3] object-cover rounded-md mb-3"
+    class="mb-3 aspect-[4/3] w-full rounded-md object-cover"
   />
   <div class="text-foreground dark:text-white">
-    <h3 class="text-lg font-medium mb-1">{title}</h3>
+    <h3 class="mb-1 text-lg font-medium">{title}</h3>
   </div>
 </a>

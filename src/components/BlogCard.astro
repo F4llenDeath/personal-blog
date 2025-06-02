@@ -7,7 +7,12 @@ import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import Link from './Link.astro'
 
-import { getLangFromUrl, useTranslations, useTranslatedPath, formatLocalizedDate } from '@/i18n/util'
+import {
+  formatLocalizedDate,
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from '@/i18n/util'
 
 interface Props {
   entry: CollectionEntry<'blog'>
@@ -55,7 +60,11 @@ const getSlug = (id: string) => {
       >
         <span>{formattedDate}</span>
         <Separator orientation="vertical" className="h-4!" />
-        <span>{t('blog.readTime', { time: readTime.replace(/\s*read$/, '') })}</span>
+        <span
+          >{
+            t('blog.readTime', { time: readTime.replace(/\s*read$/, '') })
+          }</span
+        >
       </div>
 
       {

@@ -1,9 +1,9 @@
 ---
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { getLangFromUrl, useTranslations } from '@/i18n/util'
 import { cn } from '@/lib/utils'
 import type { MarkdownHeading } from 'astro'
 import { Icon } from 'astro-icon/components'
-import { getLangFromUrl, useTranslations } from '@/i18n/util'
 
 type Props = {
   headings: MarkdownHeading[]
