@@ -22,7 +22,9 @@ const translatePath = useTranslatedPath(lang)
     src={cover}
     alt={title}
     format="avif"
-    quality="mid"
+    quality={30}
+    widths={[400, 800, 1200]}
+    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
     class="mb-3 aspect-[4/3] w-full rounded-md object-cover"
   />
   <div class="text-foreground dark:text-white">

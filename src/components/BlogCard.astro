@@ -43,8 +43,10 @@ const getSlug = (id: string) => {
           <Image
             src={entry.data.image}
             alt={entry.data.title}
-            width={1200}
-            height={630}
+            format="avif"
+            quality={30}
+            widths={[400, 800, 1200]}
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
             class="object-cover"
           />
         </div>
