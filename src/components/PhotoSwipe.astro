@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro'
 import { Image, getImage } from 'astro:assets'
+import PhotoSwipeClient from '@/components/ui/photo-swipe-client'
 
 interface Props {
     album: string
@@ -69,15 +70,4 @@ const gallery = await Promise.all(
     }
 </div>
 
-<script>
-    import PhotoSwipeLightbox from "photoswipe/lightbox";
-    import "photoswipe/style.css";
-
-    const lightbox = new PhotoSwipeLightbox({
-        gallery: "#gallery",
-        children: "a",
-        pswpModule: () => import("photoswipe"),
-    });
-
-    lightbox.init();
-</script>
+<PhotoSwipeClient client:load />
