@@ -61,9 +61,7 @@ const { next, prev } = await getAdjacentPosts(currentPostId, lang)
           src={post.data.image}
           alt={post.data.title}
           format="avif"
-          quality={30}
-          widths={[600, 1200, 1800, 2400]}
-          sizes="(min-width: 1024px) 60vw, 100vw"
+          quality={90}
           class="col-span-full mx-auto w-full max-w-5xl object-cover"
         />
       )
