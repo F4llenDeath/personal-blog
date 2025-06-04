@@ -114,11 +114,16 @@
   position: relative;
   width: 100vw;
   left: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  transform: translateX(-50%);
+  overflow-x: hidden; 
+  box-sizing: border-box; 
 }
 
 .gallery-fullbleed > div {
   max-width: none;
   width: 100%;
+}
+
+body {
+  overflow-x: clip;
 }
