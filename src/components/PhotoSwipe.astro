@@ -1,0 +1,73 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Image, getImage } from 'astro:assets'
+import PhotoSwipeClient from '@/components/ui/photo-swipe-client'
+
+interface Props {
+    album: string
+    widths?: number[]
+    sizes?: string
+    format?: 'avif' | 'webp' | 'jpeg' | 'png'
+    quality?: number
+    fullWidth?: number
+}
+
+const {
+    album,
+    widths = [400, 800, 1200, 1600],
+    sizes = '(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw',
+    format = 'avif',
+    quality = 30,
+    fullWidth = 1600,
+} = Astro.props
+
+const allLoaders = import.meta.glob<{ default: ImageMetadata }>(
+    '/src/content/albums/*/*',
+)
+
+const loaders = Object.entries(allLoaders).filter(([path]) =>
+    path.startsWith(`/src/content/albums/${album}/`),
+)
+
+const gallery = await Promise.all(
+    loaders.map(async ([, load]) => {
+        const { default: original } = await load()
+        const full = await getImage({ src: original, width: fullWidth, format })
+        return { original, full }
+    }),
+)
+---
+
+<style>
+    #gallery a {
+        pointer-events: none;
+    }
+    body.pswp-ready #gallery a {
+        pointer-events: auto;
+    }
+</style>
+
+<div id="gallery" class="w-full px-4 sm:columns-1 md:columns-2 lg:columns-3">
+    {
+        gallery.map(({ original, full }) => (
+            <a
+                href={full.src}
+                data-pswp-width={full.attributes.width}
+                data-pswp-height={full.attributes.height}
+            >
+                <Image
+                    src={original}
+                    format={format}
+                    quality={quality}
+                    widths={widths}
+                    sizes={sizes}
+                    loading="lazy"
+                    alt={`Image from ${album} album`}
+                    class="mb-4 rounded-sm border border-transparent transition-all duration-300 ease-in-out hover:border-gray-300 hover:shadow-lg"
+                />
+            </a>
+        ))
+    }
+</div>
+
+<PhotoSwipeClient client:only="react"/>

@@ -61,9 +61,7 @@ const { next, prev } = await getAdjacentPosts(currentPostId, lang)
           src={post.data.image}
           alt={post.data.title}
           format="avif"
-          quality={30}
-          widths={[600, 1200, 1800, 2400]}
-          sizes="(min-width: 1024px) 60vw, 100vw"
+          quality={90}
           class="col-span-full mx-auto w-full max-w-5xl object-cover"
         />
       )
@@ -122,7 +120,7 @@ const { next, prev } = await getAdjacentPosts(currentPostId, lang)
     <div class="flex items-center gap-2 justify-center">
       <div class="flex flex-col text-center">
         <p class="m-0">
-          Text licensed under
+          Text and pictures licensed under
           <a
             href="https://creativecommons.org/licenses/by-nc/4.0/"
             target="_blank"
@@ -141,17 +139,6 @@ const { next, prev } = await getAdjacentPosts(currentPostId, lang)
             class="underline hover:text-primary"
           >
             MIT License
-          </a>
-        </p>
-        <p class="m-0">
-          Photos licensed under
-          <a
-            href="https://creativecommons.org/licenses/by-nc/4.0/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="underline hover:text-primary"
-          >
-            CC BY‑NC 4.0
           </a>
         </p>
       </div>

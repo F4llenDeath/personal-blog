@@ -4,10 +4,9 @@ import PageHead from '@/components/PageHead.astro'
 import { defaultLang } from '@/i18n/ui'
 import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
-import { getAlbumImages } from '@/utils/albums'
 import { Icon } from 'astro-icon/components'
-import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
+import PhotoSwipe from "@/components/PhotoSwipe.astro";
 
 export async function getStaticPaths() {
   const allAlbums = await getCollection('albums')
@@ -34,7 +33,6 @@ const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
 const baseId = Astro.params.id
-const images: ImageMetadata[] = await getAlbumImages(baseId)
 const downloadUrl = 'https://mega.nz/folder/d20X2ZYS#cLsYdzU0cml5TDpe5emXpg'
 ---
 
@@ -110,22 +108,7 @@ const downloadUrl = 'https://mega.nz/folder/d20X2ZYS#cLsYdzU0cml5TDpe5emXpg'
     }
 
     <section class="gallery-fullbleed my-8">
-      <div class="w-full px-4 sm:columns-1 md:columns-2 lg:columns-3">
-        {
-          images.map((image) => (
-            <Image
-              src={image}
-              alt={`Image from ${album.data.title} album`}
-              format="avif"
-              quality={30}
-              widths={[400, 800, 1200, 1600]}
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              class="mb-4 rounded-sm border border-transparent transition-all duration-300 ease-in-out hover:border-gray-300 hover:shadow-lg"
-              loading="lazy"
-            />
-          ))
-        }
-      </div>
+      <PhotoSwipe album={baseId} />
     </section>
 
     <div class="mt-12 flex justify-center">
