@@ -73,7 +73,7 @@ export default defineConfig({
     removeOriginalImages(),
   ],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [...tailwindcss()],
     resolve: {
       dedupe: ['react', 'react-dom'],
     },
@@ -116,5 +116,3 @@ export default defineConfig({
     remarkPlugins: [remarkMath, remarkEmoji, remarkSectionize],
   },
 })
-
-
