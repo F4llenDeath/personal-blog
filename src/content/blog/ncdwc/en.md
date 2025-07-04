@@ -104,6 +104,8 @@ DEFAULT_PAUSE = 1.0   # seconds to wait between scrapes to avoid overloading ser
 
 #### Knapsack
 
+![knapsack-page](./assests/knapsack.png)
+
 Knapsack stores data in this structure:
 
 ```html
@@ -145,6 +147,8 @@ def parse_knapsack(driver):
 ```
 
 #### NPASS
+
+![npass-page](./assests/npass.png)
 
 ```html
 <tr>
@@ -296,6 +300,8 @@ if __name__ == '__main__':
 
 As mentioned above, when writing the Wikidata scraper, I realized that web scraping was not the most elegant solution for “retrieving reference tables of chemical constituents.” I soon learned that PubChem actually provides an API platform: [PUG REST](https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest), and in fact, bulk scraping of web pages is discouraged. I quickly decided to correct my mistake and rewrote the whole script.
 
+![pug-rest-api-structure](./assests/pubchem-api.png)
+
 PUG REST queries are all based on PubChem identifiers: SID represents substance IDs, CID stands for compound IDs, and AID for assay IDs. To query information related to a substance/compound/assay, you can use a URL structure like:
 
 > | [https://pubchem.ncbi.nlm.nih.gov/rest/pug](https://pubchem.ncbi.nlm.nih.gov/rest/pug) | **/compound/name/vioxx** | **/property/InChI** | **/TXT** |
@@ -403,7 +409,7 @@ Using the API is much faster than using a web crawler: the time it takes for the
 
 After this, I wanted to further streamline the workflow, ideally automating the step of downloading a compound list from PubChem—so that given a Taxonomy ID, I could directly output a table including all necessary compound information. But there was a snag. PUG REST doesn’t directly link Taxonomy ID with CID; at best, I can go Taxonomy ID -> AID -> CID. The documentation explains:
 
-> #### Assays and Bioactivities
+> **Assays and Bioactivities**
 >
 > The following operation returns a list of compounds involved in a given taxonomy. Valid output formats are XML, JSON(P), ASNT/B, and TXT.
 >

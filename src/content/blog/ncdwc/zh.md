@@ -104,6 +104,8 @@ DEFAULT_PAUSE = 1.0   # seconds to wait between scrapes to avoid overloading ser
 
 #### Knapsack
 
+![knapsack-page](./assests/knapsack.png)
+
 Knapsack 以这样的结构存储数据：
 
 ```html
@@ -145,6 +147,8 @@ def parse_knapsack(driver):
 ```
 
 #### NPASS
+
+![npass-page](./assests/npass.png)
 
 ```html
 <tr>
@@ -296,6 +300,8 @@ if __name__ == '__main__':
 
 前面说过，我在写 Wikidata 的爬虫时就意识到，对于「获取参考化学成分表」这一任务来说，爬虫这个方法有点过于不优雅了。很快我就了解到原来 PubChem 提供了 API 平台：[PUG REST](https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest)，而且并不鼓励直接使用爬虫大量爬取网页内容。我立刻决定弥补我犯下的错误，重写整个脚本。
 
+![pug-rest-api-structure](./assests/pubchem-api.png)
+
 PUG REST 的查询都基于 PubChem 编号，即 SID 代表物质编号，CID 代表成分编号，AID 代表检验编号。想要查询某个编号的物质 / 成分 / 检验相关的信息，就可以使用这样的 URL 结构：
 
 > | [https://pubchem.ncbi.nlm.nih.gov/rest/pug](https://pubchem.ncbi.nlm.nih.gov/rest/pug) | **/compound/name/vioxx** | **/property/InChI** | **/TXT** |
@@ -403,7 +409,7 @@ for prop in prop_names:
 
 在这之后我还想进一步简化流程，希望能够将从 PubChem 手动下载化合物列表这一步也自动化，实现输入 Taxonomy ID，直接输出对应的，包含所有所需信息的化合物表格，但是这遇到了一些困难。PUG REST 并没有将 Taxonomy ID 和 CID 直接联系在一起的功能，而最接近的只有 Taxonomy ID -> AID -> CID。文档中有写到：
 
-> #### Assays and Bioactivities
+> **Assays and Bioactivities**
 >
 > The following operation returns a list of compounds involved in a given taxonomy. Valid output formats are XML, JSON(P), ASNT/B, and TXT.
 >
