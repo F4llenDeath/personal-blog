@@ -2,7 +2,7 @@
 title: '基于Fabric, Velocity和MCDR搭建Minecraft服务器'
 description: 'Minecraft服务器设置指南，基于我在建立一个小型的技术生存服务器时的经验'
 date: 2025-05-15
-tags: ['Minecraft', 'selfhost']
+tags: ['Minecraft', 'Selfhost']
 image: './BMSFVM.png'
 authors: ['F4llenDeath']
 lang: 'zh'

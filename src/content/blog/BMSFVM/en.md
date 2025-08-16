@@ -2,7 +2,7 @@
 title: 'Building a Minecraft Server with Fabric, Velocity, and MCDR'
 description: 'A Minecraft server setup guide based on the lessons I learned while setting up a small, friend‑only technical-survival server'
 date: 2025-05-15
-tags: ['Minecraft', 'selfhost']
+tags: ['Minecraft', 'Selfhost']
 image: './BMSFVM.png'
 authors: ['F4llenDeath']
 lang: 'en'
