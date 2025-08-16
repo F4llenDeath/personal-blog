@@ -1,5 +1,0 @@
-# This directory is a Syncthing folder marker.
-# Do not delete.
-
-folderID: xfdww-cbfun
-created: 2025-04-21T15:44:04-05:00
