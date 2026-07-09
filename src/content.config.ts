@@ -15,18 +15,6 @@ const blog = defineCollection({
       lang: z.union([z.literal('en'), z.literal('zh')]).optional(),
     }),
 })
-
-const publications = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/publications' }),
-  schema: z.object({
-    title: z.string(),
-    href: z.string().url(),
-    icon: z.string().optional(),
-    published: z.coerce.date(),
-    journal: z.string().optional(),
-  }),
-})
-
 const albums = defineCollection({
   type: 'data',
   schema: ({ image }) =>
@@ -40,6 +28,5 @@ const albums = defineCollection({
 
 export const collections = {
   blog,
-  publications,
   albums,
 }

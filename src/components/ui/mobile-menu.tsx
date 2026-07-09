@@ -63,14 +63,6 @@ const MobileMenu = ({ lang }: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <a
-            href={`${lang === 'en' ? '' : '/' + lang}/publications`}
-            className="w-full text-lg font-medium capitalize"
-          >
-            {t('nav.publications')}
-          </a>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <a
             href={`${lang === 'en' ? '' : '/' + lang}/gallery`}
             className="w-full text-lg font-medium capitalize"
           >
@@ -79,10 +71,10 @@ const MobileMenu = ({ lang }: Props) => {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <a
-            href={`${lang === 'en' ? '' : '/' + lang}/tags`}
+            href="https://www.xichengyang.me"
             className="w-full text-lg font-medium capitalize"
           >
-            {t('nav.tags')}
+            {t('nav.resume')}
           </a>
         </DropdownMenuItem>
       </DropdownMenuContent>

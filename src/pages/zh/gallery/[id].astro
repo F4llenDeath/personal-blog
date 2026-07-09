@@ -3,7 +3,6 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/util'
 import Layout from '@/layouts/Layout.astro'
-import { Icon } from 'astro-icon/components'
 import { getCollection } from 'astro:content'
 import PhotoSwipe from "@/components/PhotoSwipe.astro";
 
@@ -21,7 +20,6 @@ const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
 const baseId = Astro.params.id
-const downloadUrl = 'https://mega.nz/folder/d20X2ZYS#cLsYdzU0cml5TDpe5emXpg'
 ---
 
 <Layout>
@@ -76,24 +74,6 @@ const downloadUrl = 'https://mega.nz/folder/d20X2ZYS#cLsYdzU0cml5TDpe5emXpg'
         </div>
       </aside>
     </div>
-
-    {
-      downloadUrl && (
-        <div class="mt-12 flex justify-center">
-          <a
-            href={downloadUrl}
-            target="_blank"
-            rel="noopener"
-            class="group border-border hover:bg-secondary/50 flex w-fit items-center gap-3 rounded-xl border px-6 py-4 transition"
-          >
-            <Icon name="lucide:cloud-download" class="text-foreground size-5" />
-            <span class="text-foreground font-semibold">
-              {t('gallery.download_all_originals')}
-            </span>
-          </a>
-        </div>
-      )
-    }
 
     <section class="gallery-fullbleed my-8">
       <PhotoSwipe album={baseId} />

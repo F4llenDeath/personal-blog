@@ -8,12 +8,9 @@ export const defaultLang = 'en';
 export const ui = {
     en: {
         'nav.blog': 'Blog',
-        'nav.publications': 'Publications',
-        'nav.tags': 'Tags',
         'nav.gallery': 'Gallery',
         'nav.resume': 'Resume',
         'gallery.back': 'Back',
-        'gallery.download_all_originals': 'Download all originals',
         'blog.nextPost': 'Next Post',
         'blog.prevPost': 'Previous Post',
         'blog.latestPost': 'Latest post!',
@@ -26,12 +23,9 @@ export const ui = {
     },
     zh: {
         'nav.blog': '博客',
-        'nav.publications': '学术成果',
-        'nav.tags': '标签',
         'nav.gallery': '相片集',
         'nav.resume': '简历',
         'gallery.back': '返回',
-        'gallery.download_all_originals': '下载所有原始照片',
         'blog.nextPost': '下一篇',
         'blog.prevPost': '上一篇',
         'blog.latestPost': '最近一篇',
