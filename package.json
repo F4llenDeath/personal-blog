@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "prettier": "prettier --write **/*.{ts,tsx,css,astro} --ignore-path .gitignore",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "gallery:upload": "node scripts/upload-cloudflare-images.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
